@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 const NotFoundPage = () => {
   return (
@@ -15,7 +16,7 @@ const NotFoundPage = () => {
       </header>
       <div className="sign-in user-page__content">
         <h2>404. Page not found.</h2>
-        <link to="/" />Вернуться на главную
+        <Link to="/">Вернуться на главную</Link>
       </div>
       <footer className="page-footer">
         <div className="logo">
