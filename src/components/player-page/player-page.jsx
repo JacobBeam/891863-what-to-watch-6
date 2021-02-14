@@ -1,12 +1,25 @@
 import React from 'react';
+import {useHistory} from 'react-router-dom';
+import {findFilmById} from '../../utils/utils';
+import {filmsPropTypes} from '../../utils/prop-types';
 
-const PlayerPage = () => {
+const PlayerPage = (props) => {
+
+  const {films} = props;
+  const seachId = Number(props.match.params.id);
+  const film = findFilmById(films, seachId);
+  const history = useHistory();
 
   return (
 
     <div className="player">
-      <video src="#" className="player__video" poster="img/player-poster.jpg" />
-      <button type="button" className="player__exit">Exit</button>
+      <video src="#" className="player__video" poster={film.backgroundImage} />
+      <button
+        type="button"
+        className="player__exit"
+        onClick={() => history.goBack()}
+      >
+        Exit</button>
       <div className="player__controls">
         <div className="player__controls-row">
           <div className="player__time">
@@ -22,7 +35,7 @@ const PlayerPage = () => {
             </svg>
             <span>Play</span>
           </button>
-          <div className="player__name">Transpotting</div>
+          <div className="player__name">{film.name}</div>
           <button type="button" className="player__full-screen">
             <svg viewBox="0 0 27 27" width={27} height={27}>
               <use xlinkHref="#full-screen" />
@@ -35,5 +48,7 @@ const PlayerPage = () => {
 
   );
 };
+
+PlayerPage.propTypes = filmsPropTypes;
 
 export default PlayerPage;

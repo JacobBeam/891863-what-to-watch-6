@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
 import MainPage from '../main-page/main-page';
 import MoviePage from '../movie-page/movie-page';
@@ -8,11 +7,12 @@ import NotFoundPage from '../not-found-page/not-found-page';
 import PlayerPage from '../player-page/player-page';
 import SignInPage from '../sign-in-page/sign-in-page';
 import AddReviewPage from '../add-review-page/add-review-page';
+import {filmsPropTypes} from '../../utils/prop-types';
 
 
 const App = (props)=>{
 
-  const {name, genre, released} = props;
+  const {films} = props;
 
   return (
 
@@ -20,25 +20,37 @@ const App = (props)=>{
       <Switch>
         <Route exact path="/">
           <MainPage
-            name={name}
-            genre={genre}
-            released={released}
+            films={films}
           ></MainPage>
         </Route>
         <Route exact path="/login">
           <SignInPage></SignInPage>
         </Route>
         <Route exact path="/mylist">
-          <MyListPage></MyListPage>
+          <MyListPage
+            films={films}
+          ></MyListPage>
         </Route>
-        <Route exact path="/films/:id">
-          <MoviePage></MoviePage>
+        <Route exact path="/films/:id"
+          render= {(prop)=> (
+            <MoviePage
+              films={films} {...prop}
+            ></MoviePage>
+          )}>
         </Route>
-        <Route exact path="/films/:id/review">
-          <AddReviewPage></AddReviewPage>
+        <Route exact path="/films/:id/review"
+          render= {(prop)=> (
+            <AddReviewPage
+              films={films} {...prop}
+            ></AddReviewPage>
+          )}>
         </Route>
-        <Route exact path="/player/:id">
-          <PlayerPage></PlayerPage>
+        <Route exact path="/player/:id"
+          render= {(prop)=> (
+            <PlayerPage
+              films={films} {...prop}
+            ></PlayerPage>
+          )}>
         </Route>
         <Route>
           <NotFoundPage></NotFoundPage>
@@ -48,10 +60,6 @@ const App = (props)=>{
   );
 };
 
-App.propTypes = {
-  name: PropTypes.string.isRequired,
-  genre: PropTypes.string.isRequired,
-  released: PropTypes.number.isRequired,
-};
+App.propTypes = filmsPropTypes;
 
 export default App;
