@@ -1,6 +1,6 @@
 import React from 'react';
 import {conversionMinutes} from '../../utils/utils';
-import {commentsPropTypes} from '../../utils/prop-types';
+import {filmPropTypes} from '../../utils/prop-types';
 
 const TabDetails = (props)=>{
 
@@ -38,11 +38,9 @@ const TabDetails = (props)=>{
         </p>
       </div>
     </div>
-
   );
 };
 
-
-TabDetails.propTypes = commentsPropTypes;
+TabDetails.propTypes = filmPropTypes;
 
 export default TabDetails;

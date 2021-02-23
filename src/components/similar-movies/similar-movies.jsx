@@ -7,7 +7,6 @@ const SIMILAR_MOVIES_COUNT = 4;
 const SimilarMovies = (props)=> {
 
   const [activeFilmCard, setActiveFilmCard] = useState({id: ``});
-
   const {films, activeFilm} = props;
 
   const handleAddActiveCard = (currentTarget) => {
@@ -19,7 +18,6 @@ const SimilarMovies = (props)=> {
   };
 
   return (
-
     <div className="catalog__movies-list">
       {films.filter((element)=>element.genre === activeFilm.genre && element.id !== activeFilm.id)
       .slice(0, SIMILAR_MOVIES_COUNT)
@@ -29,14 +27,11 @@ const SimilarMovies = (props)=> {
         onAddActiveCard={handleAddActiveCard}
         onDeleteActiveCard={handleDeleteActiveCard}
       ></MovieCard>)}
-
     </div>
-
-
   );
 };
 
 SimilarMovies.propTypes = {...filmsPropTypes,
-  ...filmPropTypes};
+  ...filmPropTypes.film};
 
 export default SimilarMovies;

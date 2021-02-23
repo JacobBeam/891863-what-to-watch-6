@@ -1,11 +1,16 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import MovieList from '../movie-list/movie-list';
+import GenreList from '../genres-list/genres-list';
 import {useHistory} from 'react-router-dom';
 import {filmsPropTypes} from '../../utils/prop-types';
+import {filterFilmsByGenre} from '../../utils/utils';
 
 const MainPage = (props)=> {
-  const {films} = props;
+
+  const {films, genre} = props;
   const history = useHistory();
+  const filteredFilms = filterFilmsByGenre(genre, films);
 
   return (
     <React.Fragment>
@@ -13,9 +18,7 @@ const MainPage = (props)=> {
         <div className="movie-card__bg">
           <img src={films[0].backgroundImage} alt={films[0].name} />
         </div>
-
         <h1 className="visually-hidden">WTW</h1>
-
         <header className="page-header movie-card__head">
           <div className="logo">
             <a className="logo__link">
@@ -24,27 +27,23 @@ const MainPage = (props)=> {
               <span className="logo__letter logo__letter--3">W</span>
             </a>
           </div>
-
           <div className="user-block">
             <div className="user-block__avatar">
               <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
             </div>
           </div>
         </header>
-
         <div className="movie-card__wrap">
           <div className="movie-card__info">
             <div className="movie-card__poster">
               <img src={films[0].posterImage} alt={films[0].name} width="218" height="327" />
             </div>
-
             <div className="movie-card__desc">
               <h2 className="movie-card__title">{films[0].name}</h2>
               <p className="movie-card__meta">
                 <span className="movie-card__genre">{films[0].genre}</span>
                 <span className="movie-card__year">{films[0].released}</span>
               </p>
-
               <div className="movie-card__buttons">
                 <button
                   className="btn btn--play movie-card__button"
@@ -70,45 +69,13 @@ const MainPage = (props)=> {
           </div>
         </div>
       </section>
-
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
-
-          <ul className="catalog__genres-list">
-            <li className="catalog__genres-item catalog__genres-item--active">
-              <a href="#" className="catalog__genres-link">All genres</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Comedies</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Crime</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Documentary</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Dramas</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Horror</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Kids &amp; Family</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Romance</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Sci-Fi</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Thrillers</a>
-            </li>
-          </ul>
-
-          <MovieList films={films}></MovieList>
+          <GenreList></GenreList>
+          <MovieList
+            films={filteredFilms}
+          ></MovieList>
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>
@@ -135,4 +102,10 @@ const MainPage = (props)=> {
 
 MainPage.propTypes = filmsPropTypes;
 
-export default MainPage;
+const mapStateToProps = (state) => ({
+  genre: state.genre,
+  films: state.films,
+});
+
+export {MainPage};
+export default connect(mapStateToProps, null)(MainPage);
