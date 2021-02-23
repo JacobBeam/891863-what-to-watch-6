@@ -1,21 +1,13 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {useHistory, Link} from 'react-router-dom';
-import MovieCard from '../movie-card/movie-card';
+import TabsList from '../tabs-list/tabs-list';
+import SimilarMovies from '../similar-movies/similar-movies';
 import {findFilmById} from '../../utils/utils';
 import {filmsPropTypes} from '../../utils/prop-types';
 
 
 const MoviePage = (props) => {
 
-  const [activeFilmCard, setActiveFilmCard] = useState({id: ``});
-
-  const handleAddActiveCard = (currentTarget) => {
-    setActiveFilmCard({...activeFilmCard, id: currentTarget.dataset.filmId});
-  };
-
-  const handleDeleteActiveCard = () => {
-    setActiveFilmCard({...activeFilmCard, id: ``});
-  };
 
   const {films} = props;
   const seachId = Number(props.match.params.id);
@@ -81,51 +73,16 @@ const MoviePage = (props) => {
             <div className="movie-card__poster movie-card__poster--big">
               <img src={film.posterImage} alt={film.name} width={218} height={327} />
             </div>
-            <div className="movie-card__desc">
-              <nav className="movie-nav movie-card__nav">
-                <ul className="movie-nav__list">
-                  <li className="movie-nav__item movie-nav__item--active">
-                    <a href="#" className="movie-nav__link">Overview</a>
-                  </li>
-                  <li className="movie-nav__item">
-                    <a href="#" className="movie-nav__link">Details</a>
-                  </li>
-                  <li className="movie-nav__item">
-                    <a href="#" className="movie-nav__link">Reviews</a>
-                  </li>
-                </ul>
-              </nav>
-              <div className="movie-rating">
-                <div className="movie-rating__score">{film.rating}</div>
-                <p className="movie-rating__meta">
-                  <span className="movie-rating__level">Very good</span>
-                  <span className="movie-rating__count">{film.scoresCount}</span>
-                </p>
-              </div>
-              <div className="movie-card__text">
-                <p>{film.description}</p>
-                <p className="movie-card__director"><strong>Director: {film.director}</strong></p>
-                <p className="movie-card__starring"><strong>{film.starring.join(`, `)}</strong></p>
-              </div>
-            </div>
+            <TabsList film={film}></TabsList>
           </div>
         </div>
       </section>
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-          <div className="catalog__movies-list">
 
-            {films.filter((element)=>element.genre === film.genre && element.id !== film.id)
-                .map((element)=><MovieCard
-                  key={element.id}
-                  film={element}
-                  onAddActiveCard={handleAddActiveCard}
-                  onDeleteActiveCard={handleDeleteActiveCard}
-                ></MovieCard>)}
+          <SimilarMovies films={films} activeFilm={film}></SimilarMovies>
 
-
-          </div>
         </section>
         <footer className="page-footer">
           <div className="logo">

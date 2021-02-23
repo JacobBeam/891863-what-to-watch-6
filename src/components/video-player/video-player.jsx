@@ -1,6 +1,8 @@
 import React, {Fragment, useEffect, useRef} from 'react';
 import {filmPropTypes} from '../../utils/prop-types';
 
+const TIMEOUT_IN_MS = 1000;
+
 const VideoPlayer = (props)=> {
   const {film} = props;
   const {previewImage, previewVideoLink} = film;
@@ -13,7 +15,7 @@ const VideoPlayer = (props)=> {
     videoRef.current.onmouseenter = () => {
       timer = setTimeout(() => {
         videoRef.current.play();
-      }, 1000);
+      }, TIMEOUT_IN_MS);
     };
 
     videoRef.current.onmouseleave = () => {
