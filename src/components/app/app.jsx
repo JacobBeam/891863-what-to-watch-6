@@ -9,19 +9,15 @@ import SignInPage from '../sign-in-page/sign-in-page';
 import AddReviewPage from '../add-review-page/add-review-page';
 import {filmsPropTypes} from '../../utils/prop-types';
 
-
 const App = (props)=>{
 
   const {films} = props;
 
   return (
-
     <BrowserRouter>
       <Switch>
         <Route exact path="/">
-          <MainPage
-            films={films}
-          ></MainPage>
+          <MainPage></MainPage>
         </Route>
         <Route exact path="/login">
           <SignInPage></SignInPage>

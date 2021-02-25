@@ -1,4 +1,4 @@
-import {RatingLevels} from './const';
+import {RatingLevels, allGenreFilter} from './const';
 
 export const findFilmById = (films, id) => {
   return films.find((element) => element.id === id);
@@ -17,7 +17,6 @@ export const findRatingLevel = (rating) => {
   let currentRating = ``;
 
   switch (true) {
-
     case (rating >= 0 && rating < 3):
       currentRating = RatingLevels.BAD;
       break;
@@ -34,7 +33,14 @@ export const findRatingLevel = (rating) => {
       currentRating = RatingLevels.AWESOME;
       break;
   }
-
   return currentRating;
+};
 
+export const filterFilmsByGenre = (genre, films) => {
+
+  if (genre === allGenreFilter.ALL_GENRES) {
+    return films;
+  }
+
+  return films.filter((film)=>film.genre === genre);
 };

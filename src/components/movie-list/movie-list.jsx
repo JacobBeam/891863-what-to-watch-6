@@ -2,11 +2,9 @@ import React, {useState} from 'react';
 import MovieCard from '../movie-card/movie-card';
 import {filmsPropTypes} from '../../utils/prop-types';
 
-
 const MovieList = (props) => {
   const [activeFilmCard, setActiveFilmCard] = useState({id: ``});
-
-  const {films} = props;
+  const {films, countFilmsInList} = props;
 
   const handleAddActiveCard = (currentTarget) => {
     setActiveFilmCard({...activeFilmCard, id: currentTarget.dataset.filmId});
@@ -19,7 +17,9 @@ const MovieList = (props) => {
   return (
     <div className="catalog__movies-list">
       {
-        films.map((element)=><MovieCard
+        films
+        .slice(0, countFilmsInList)
+        .map((element)=><MovieCard
           key={element.id}
           film={element}
           onAddActiveCard={handleAddActiveCard}
@@ -29,7 +29,6 @@ const MovieList = (props) => {
     </div>
   );
 };
-
 
 MovieList.propTypes = filmsPropTypes;
 

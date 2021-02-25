@@ -11,3 +11,7 @@ export const RatingLevels = {
   VERY_GOOD: `Very good`,
   AWESOME: `Awesome`
 };
+
+export const allGenreFilter = {
+  ALL_GENRES: `All genres`
+};
