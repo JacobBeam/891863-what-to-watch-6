@@ -3,11 +3,16 @@ import {connect} from 'react-redux';
 import {ActionCreator} from '../../store/action';
 import {allGenreFilter} from '../../utils/const';
 import PropTypes from 'prop-types';
+import {START_COUNT_FILMS_IN_LIST} from '../../utils/const';
 
 const GenreItem = (props) => {
 
-  const {name, genre, changeGenre, resetGenre} = props;
+  const {name, genre, changeGenre, resetGenre, resetCountFilms} = props;
   const isReset = (name === allGenreFilter.ALL_GENRES) ? true : false;
+
+  const handleResetCountFilms = () => {
+    resetCountFilms(START_COUNT_FILMS_IN_LIST);
+  };
 
   return (
     <li className={`catalog__genres-item ${name === genre ? `catalog__genres-item--active` : ``}`}
@@ -18,6 +23,7 @@ const GenreItem = (props) => {
         } else {
           changeGenre(name);
         }
+        handleResetCountFilms();
       }}>
       <a href="#" className="catalog__genres-link">{name}</a>
     </li>);
@@ -27,7 +33,8 @@ GenreItem.propTypes = {
   name: PropTypes.string.isRequired,
   genre: PropTypes.string.isRequired,
   changeGenre: PropTypes.func.isRequired,
-  resetGenre: PropTypes.func.isRequired
+  resetGenre: PropTypes.func.isRequired,
+  resetCountFilms: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({

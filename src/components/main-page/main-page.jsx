@@ -1,13 +1,15 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import MovieList from '../movie-list/movie-list';
 import GenreList from '../genres-list/genres-list';
+import ShowMoreButton from '../show-more-button/show-more-button';
 import {useHistory} from 'react-router-dom';
 import {filmsPropTypes} from '../../utils/prop-types';
 import {filterFilmsByGenre} from '../../utils/utils';
 
 const MainPage = (props)=> {
 
+  const [countFilmsInFilter, setCountFilmsInFilter] = useState(8);
   const {films, genre} = props;
   const history = useHistory();
   const filteredFilms = filterFilmsByGenre(genre, films);
@@ -72,14 +74,20 @@ const MainPage = (props)=> {
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
-          <GenreList></GenreList>
+          <GenreList
+            setStartCountFilmsInList={setCountFilmsInFilter}>
+          </GenreList>
           <MovieList
             films={filteredFilms}
+            countFilmsInList={countFilmsInFilter}
           ></MovieList>
 
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
+          { filteredFilms.length > countFilmsInFilter &&
+            <ShowMoreButton
+              countFilmsInList={countFilmsInFilter}
+              setCountFilmsInList={setCountFilmsInFilter}
+            ></ShowMoreButton>
+          }
         </section>
 
         <footer className="page-footer">
