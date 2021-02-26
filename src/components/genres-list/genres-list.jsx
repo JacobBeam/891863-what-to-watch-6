@@ -3,17 +3,26 @@ import {connect} from 'react-redux';
 import {allGenreFilter} from '../../utils/const';
 import GenreItem from '../genre-item/genre-item';
 import {filmsPropTypes} from '../../utils/prop-types';
+import {START_COUNT_FILMS_IN_LIST} from '../../utils/const';
 
 const GenreList = (props) =>{
 
-  const {films} = props;
+  const {films, setStartCountFilmsInList} = props;
   const uniqueGenres = Array.from(new Set(films.map((film)=>film.genre)));
   uniqueGenres.unshift(allGenreFilter.ALL_GENRES);
+
+  const handleResetCountFilms = () => {
+    setStartCountFilmsInList(START_COUNT_FILMS_IN_LIST);
+  };
 
   return (
     <ul className="catalog__genres-list">
       {uniqueGenres.map((element, index)=>{
-        return <GenreItem key={element + index} name={element}>{element}</GenreItem>;
+        return <GenreItem
+          key={element + index}
+          name={element}
+          resetCountFilms={handleResetCountFilms}>{element}
+        </GenreItem>;
       })}
     </ul>
   );
