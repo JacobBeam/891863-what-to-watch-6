@@ -1,15 +1,17 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 import MovieList from '../movie-list/movie-list';
 import GenreList from '../genres-list/genres-list';
 import ShowMoreButton from '../show-more-button/show-more-button';
 import {useHistory} from 'react-router-dom';
 import {filmsPropTypes} from '../../utils/prop-types';
 import {filterFilmsByGenre} from '../../utils/utils';
+import {START_COUNT_FILMS_IN_LIST} from '../../utils/const';
 
 const MainPage = (props)=> {
 
-  const [countFilmsInFilter, setCountFilmsInFilter] = useState(8);
+  const [countFilmsInFilter, setCountFilmsInFilter] = useState(START_COUNT_FILMS_IN_LIST);
   const {films, genre} = props;
   const history = useHistory();
   const filteredFilms = filterFilmsByGenre(genre, films);
@@ -108,7 +110,10 @@ const MainPage = (props)=> {
   );
 };
 
-MainPage.propTypes = filmsPropTypes;
+MainPage.propTypes = {
+  ...filmsPropTypes,
+  genre: PropTypes.string.isRequired
+};
 
 const mapStateToProps = (state) => ({
   genre: state.genre,

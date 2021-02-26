@@ -1,7 +1,7 @@
 export const ActionType = {
   GENRE_CHANGES: `genre/change`,
   RESET_GENRES: `genre/reset`,
-  FILM_BY_GENRE: `film/filteringByGenre`
+  LOAD_FILMS: `data/loadFilms`
 };
 
 export const ActionCreator = {
@@ -10,7 +10,11 @@ export const ActionCreator = {
     type: ActionType.GENRE_CHANGES,
     payload: genre
   }),
-  resetGenre: () =>({
+  resetGenre: () => ({
     type: ActionType.RESET_GENRES,
+  }),
+  loadFilms: (films)=>({
+    type: ActionType.LOAD_FILMS,
+    payload: films
   })
 };

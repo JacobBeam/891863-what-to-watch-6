@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {allGenreFilter} from '../../utils/const';
 import GenreItem from '../genre-item/genre-item';
@@ -28,7 +29,10 @@ const GenreList = (props) =>{
   );
 };
 
-GenreList.propTypes = filmsPropTypes;
+GenreList.propTypes = {
+  ...filmsPropTypes,
+  setStartCountFilmsInList: PropTypes.func.isRequired
+};
 
 const mapStateToProps = (state) => ({
   films: state.films,
