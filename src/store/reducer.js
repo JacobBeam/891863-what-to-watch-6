@@ -1,9 +1,10 @@
 import {ActionType} from './action';
-import filmList from '../mocks/films';
+import {allGenreFilter} from '../utils/const';
 
 const initialState = {
-  genre: `All genres`,
-  films: filmList
+  genre: allGenreFilter.ALL_GENRES,
+  films: [],
+  isFilmsLoaded: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -15,7 +16,14 @@ const reducer = (state = initialState, action) => {
       };
     case ActionType.RESET_GENRES:
       return {
-        ...initialState
+        ...state,
+        genre: allGenreFilter.ALL_GENRES,
+      };
+    case ActionType.LOAD_FILMS:
+      return {
+        ...state,
+        films: action.payload,
+        isFilmsLoaded: true
       };
   }
 
