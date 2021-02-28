@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Switch, Route, BrowserRouter} from 'react-router-dom';
+import {Switch, Route, Router} from 'react-router-dom';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import MainPage from '../main-page/main-page';
@@ -10,8 +10,10 @@ import PlayerPage from '../player-page/player-page';
 import SignInPage from '../sign-in-page/sign-in-page';
 import AddReviewPage from '../add-review-page/add-review-page';
 import LoadingPage from '../loading-page/loading-page';
+import PrivateRoute from '../private-route/private-route';
 import {filmsPropTypes} from '../../utils/prop-types';
 import {fetchFilmsList} from '../../store/api-action';
+import browserHistory from '../../services/browser-history';
 
 const App = (props)=>{
 
@@ -30,37 +32,50 @@ const App = (props)=>{
   }
 
   return (
-    <BrowserRouter>
+    <Router history={browserHistory}>
       <Switch>
-        <Route exact path="/">
-          <MainPage ></MainPage>
+        <Route
+          exact
+          path="/"
+          render={({history})=>{
+            return <MainPage
+              onFollowingToMyList={() => history.push(`/mylist`)}
+              onFollowingToPlayer={() => history.push(`/player/${films[0].id}`)}
+            />;
+          }}
+        >
         </Route>
         <Route exact path="/login">
           <SignInPage></SignInPage>
         </Route>
-        <Route exact path="/mylist">
-          <MyListPage
+        <PrivateRoute exact
+          path="/mylist"
+          render={()=>(<MyListPage
             films={films}
-          ></MyListPage>
-        </Route>
+          ></MyListPage>)}
+        ></PrivateRoute>
         <Route exact path="/films/:id"
           render= {(prop)=> (
             <MoviePage
-              films={films} {...prop}
+              films={films}
+              {...prop}
+              onFollowingToPlayer= {(film) => prop.history.push(`/player/${film}`)}
             ></MoviePage>
           )}>
         </Route>
-        <Route exact path="/films/:id/review"
+        <PrivateRoute exact path="/films/:id/review"
           render= {(prop)=> (
             <AddReviewPage
               films={films} {...prop}
             ></AddReviewPage>
           )}>
-        </Route>
+        </PrivateRoute>
         <Route exact path="/player/:id"
           render= {(prop)=> (
             <PlayerPage
-              films={films} {...prop}
+              films={films}
+              {...prop}
+              onFollowingGoBack={() => prop.history.goBack()}
             ></PlayerPage>
           )}>
         </Route>
@@ -68,7 +83,7 @@ const App = (props)=>{
           <NotFoundPage></NotFoundPage>
         </Route>
       </Switch>
-    </BrowserRouter>
+    </Router>
   );
 };
 

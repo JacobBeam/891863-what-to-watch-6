@@ -1,10 +1,12 @@
 import {ActionType} from './action';
-import {allGenreFilter} from '../utils/const';
+import {allGenreFilter, AuthorizationStatus} from '../utils/const';
 
 const initialState = {
   genre: allGenreFilter.ALL_GENRES,
   films: [],
-  isFilmsLoaded: false
+  isFilmsLoaded: false,
+  authorizationStatus: AuthorizationStatus.NO_AUTH,
+  user: {}
 };
 
 const reducer = (state = initialState, action) => {
@@ -24,6 +26,12 @@ const reducer = (state = initialState, action) => {
         ...state,
         films: action.payload,
         isFilmsLoaded: true
+      };
+    case ActionType.REQUIRED_AUTHORIZATION:
+      return {
+        ...state,
+        authorizationStatus: action.payload.status,
+        user: action.payload.user
       };
   }
 

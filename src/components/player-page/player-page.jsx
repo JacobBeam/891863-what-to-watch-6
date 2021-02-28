@@ -1,14 +1,14 @@
 import React from 'react';
-import {useHistory} from 'react-router-dom';
+import PropTypes from 'prop-types';
 import {findFilmById} from '../../utils/utils';
 import {filmsPropTypes} from '../../utils/prop-types';
 
 const PlayerPage = (props) => {
 
-  const {films} = props;
+  const {films, onFollowingGoBack} = props;
   const seachId = Number(props.match.params.id);
   const film = findFilmById(films, seachId);
-  const history = useHistory();
+
 
   return (
 
@@ -17,7 +17,7 @@ const PlayerPage = (props) => {
       <button
         type="button"
         className="player__exit"
-        onClick={() => history.goBack()}
+        onClick={() => onFollowingGoBack()}
       >
         Exit</button>
       <div className="player__controls">
@@ -49,6 +49,9 @@ const PlayerPage = (props) => {
   );
 };
 
-PlayerPage.propTypes = filmsPropTypes;
+PlayerPage.propTypes = {
+  ...filmsPropTypes,
+  onFollowingGoBack: PropTypes.func.isRequired
+};
 
 export default PlayerPage;

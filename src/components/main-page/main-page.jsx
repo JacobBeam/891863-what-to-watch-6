@@ -4,17 +4,25 @@ import PropTypes from 'prop-types';
 import MovieList from '../movie-list/movie-list';
 import GenreList from '../genres-list/genres-list';
 import ShowMoreButton from '../show-more-button/show-more-button';
-import {useHistory} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {filmsPropTypes} from '../../utils/prop-types';
 import {filterFilmsByGenre} from '../../utils/utils';
-import {START_COUNT_FILMS_IN_LIST} from '../../utils/const';
+import {START_COUNT_FILMS_IN_LIST, AuthorizationStatus} from '../../utils/const';
+
+// Выход из личного кабинета, для тестов. Висит на логотипе в футере
+import {logout} from "../../store/api-action";
 
 const MainPage = (props)=> {
 
   const [countFilmsInFilter, setCountFilmsInFilter] = useState(START_COUNT_FILMS_IN_LIST);
-  const {films, genre} = props;
-  const history = useHistory();
+  const {films, genre, authorizationStatus, onFollowingToMyList, onFollowingToPlayer, onLogout} = props;
+
   const filteredFilms = filterFilmsByGenre(genre, films);
+
+  const handleLogout = (evt) => {
+    evt.preventDefault();
+    onLogout();
+  };
 
   return (
     <React.Fragment>
@@ -32,9 +40,19 @@ const MainPage = (props)=> {
             </a>
           </div>
           <div className="user-block">
-            <div className="user-block__avatar">
-              <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-            </div>
+
+            {(authorizationStatus === AuthorizationStatus.AUTH) ?
+              <div className="user-block__avatar">
+                <img
+                  src="img/avatar.jpg"
+                  alt="User avatar"
+                  width="63"
+                  height="63"
+                  style={{cursor: `pointer`}}
+                  onClick={()=> onFollowingToMyList()}
+                />
+              </div> : <Link to="/login" className="user-block__link">Sign in</Link>
+            }
           </div>
         </header>
         <div className="movie-card__wrap">
@@ -52,7 +70,7 @@ const MainPage = (props)=> {
                 <button
                   className="btn btn--play movie-card__button"
                   type="button"
-                  onClick={() => history.push(`/player/${films[0].id}`)}
+                  onClick={() => onFollowingToPlayer()}
                 >
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
@@ -94,7 +112,11 @@ const MainPage = (props)=> {
 
         <footer className="page-footer">
           <div className="logo">
-            <a className="logo__link logo__link--light">
+            <a
+              href="#"
+              className="logo__link logo__link--light"
+              onClick={handleLogout}
+            >
               <span className="logo__letter logo__letter--1">W</span>
               <span className="logo__letter logo__letter--2">T</span>
               <span className="logo__letter logo__letter--3">W</span>
@@ -118,7 +140,17 @@ MainPage.propTypes = {
 const mapStateToProps = (state) => ({
   genre: state.genre,
   films: state.films,
+  authorizationStatus: state.authorizationStatus,
+  onFollowingToMyList: PropTypes.func.isRequired,
+  onFollowingToPlayer: PropTypes.func.isRequired,
+  onLogout: PropTypes.func.isRequired
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onLogout() {
+    dispatch(logout());
+  }
 });
 
 export {MainPage};
-export default connect(mapStateToProps, null)(MainPage);
+export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
