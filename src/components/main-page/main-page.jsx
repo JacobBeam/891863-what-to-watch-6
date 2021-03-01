@@ -134,16 +134,16 @@ const MainPage = (props)=> {
 
 MainPage.propTypes = {
   ...filmsPropTypes,
-  genre: PropTypes.string.isRequired
+  genre: PropTypes.string.isRequired,
+  onFollowingToMyList: PropTypes.func.isRequired,
+  onFollowingToPlayer: PropTypes.func.isRequired,
+  onLogout: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
   genre: state.genre,
   films: state.films,
-  authorizationStatus: state.authorizationStatus,
-  onFollowingToMyList: PropTypes.func.isRequired,
-  onFollowingToPlayer: PropTypes.func.isRequired,
-  onLogout: PropTypes.func.isRequired
+  authorizationStatus: state.authorizationStatus
 });
 
 const mapDispatchToProps = (dispatch) => ({
