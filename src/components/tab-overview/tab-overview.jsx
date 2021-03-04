@@ -1,6 +1,8 @@
 import React, {Fragment} from 'react';
 import {findRatingLevel} from '../../utils/utils';
 import {filmPropTypes} from '../../utils/prop-types';
+import {connect} from 'react-redux';
+
 const TabOverview = (props)=>{
 
   const {film} = props;
@@ -27,4 +29,10 @@ const TabOverview = (props)=>{
 
 TabOverview.propTypes = filmPropTypes;
 
-export default TabOverview;
+const mapStateToProps = (state) => ({
+  film: state.selectedMovie
+});
+
+
+export {TabOverview};
+export default connect(mapStateToProps, null)(TabOverview);

@@ -4,30 +4,27 @@ import TabOverview from '../tab-overview/tab-overview';
 import TabDetails from '../tab-details/tab-details';
 import TabReviews from '../tab-reviews/tab-reviews';
 import {TabType} from '../../utils/const';
-import comments from '../../mocks/comments';
-import {filmPropTypes} from '../../utils/prop-types';
 
-const TabsList = (props)=>{
+
+const TabsList = ()=>{
 
   const [activeTab, setActiveTab] = useState(TabType.OVERVIEW);
-
-  const {film} = props;
 
   const setActiveTabPage = (activeElement) =>{
 
     switch (activeElement) {
 
       case `Overview`:
-        return <TabOverview film={film}></TabOverview>;
+        return <TabOverview></TabOverview>;
 
       case `Details`:
-        return <TabDetails film={film}></TabDetails>;
+        return <TabDetails></TabDetails>;
 
       case `Reviews`:
-        return <TabReviews comments={comments}></TabReviews>;
+        return <TabReviews></TabReviews>;
     }
 
-    return <TabOverview film={film}></TabOverview>;
+    return <TabOverview></TabOverview>;
   };
 
   return (
@@ -53,7 +50,5 @@ const TabsList = (props)=>{
     </div>
   );
 };
-
-TabsList.propTypes = filmPropTypes;
 
 export default TabsList;

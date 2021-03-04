@@ -1,20 +1,34 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {findFilmById} from '../../utils/utils';
 import FormReview from '../form-review/form-review';
 import {filmsPropTypes} from '../../utils/prop-types';
+import LoadingPage from '../loading-page/loading-page';
+import {fetchFilmById, fetchCommentsOnTheFilm} from '../../store/api-action';
 
 const AddReviewPage = (props) =>{
 
-  const {films} = props;
+  const {isSelectedFilmLoaded, selectedMovie, onLoadFilm, onLoadComments} = props;
   const seachId = Number(props.match.params.id);
-  const film = findFilmById(films, seachId);
+
+  useEffect(() => {
+    if (!isSelectedFilmLoaded) {
+      onLoadFilm(seachId);
+      onLoadComments(seachId);
+    }
+  }, [isSelectedFilmLoaded]);
+
+  if (!isSelectedFilmLoaded) {
+    return (
+      <LoadingPage></LoadingPage>
+    );
+  }
 
   return (
     <section className="movie-card movie-card--full">
       <div className="movie-card__header">
         <div className="movie-card__bg">
-          <img src={film.backgroundImage} alt={film.name} />
+          <img src={selectedMovie.backgroundImage} alt={selectedMovie.name} />
         </div>
         <h1 className="visually-hidden">WTW</h1>
         <header className="page-header">
@@ -28,7 +42,7 @@ const AddReviewPage = (props) =>{
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link to={`/films/${film.id}`} className="breadcrumbs__link">{film.name}</Link>
+                <Link to={`/films/${selectedMovie.id}`} className="breadcrumbs__link">{selectedMovie.name}</Link>
               </li>
               <li className="breadcrumbs__item">
                 <a className="breadcrumbs__link">Add review</a>
@@ -42,7 +56,7 @@ const AddReviewPage = (props) =>{
           </div>
         </header>
         <div className="movie-card__poster movie-card__poster--small">
-          <img src={film.posterImage} alt={film.name} width={218} height={327} />
+          <img src={selectedMovie.posterImage} alt={selectedMovie.name} width={218} height={327} />
         </div>
       </div>
       <div className="add-review">
@@ -54,4 +68,21 @@ const AddReviewPage = (props) =>{
 
 AddReviewPage.propTypes = filmsPropTypes;
 
-export default AddReviewPage;
+const mapStateToProps = (state) => ({
+  isSelectedFilmLoaded: state.isSelectedFilmLoaded,
+  selectedMovie: state.selectedMovie
+});
+
+const mapDispatchToProps = (dispatch) => ({
+
+  onLoadFilm(id) {
+    dispatch(fetchFilmById(id));
+  },
+  onLoadComments(id) {
+    dispatch(fetchCommentsOnTheFilm(id));
+  }
+});
+
+
+export {AddReviewPage};
+export default connect(mapStateToProps, mapDispatchToProps)(AddReviewPage);

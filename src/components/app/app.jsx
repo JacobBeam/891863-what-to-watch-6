@@ -57,16 +57,16 @@ const App = (props)=>{
         <Route exact path="/films/:id"
           render= {(prop)=> (
             <MoviePage
-              films={films}
               {...prop}
               onFollowingToPlayer= {(film) => prop.history.push(`/player/${film}`)}
+              onFollowingToMyList={() => prop.history.push(`/mylist`)}
             ></MoviePage>
           )}>
         </Route>
         <PrivateRoute exact path="/films/:id/review"
           render= {(prop)=> (
             <AddReviewPage
-              films={films} {...prop}
+              {...prop}
             ></AddReviewPage>
           )}>
         </PrivateRoute>

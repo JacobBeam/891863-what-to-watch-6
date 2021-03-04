@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {connect} from 'react-redux';
 import MovieCard from '../movie-card/movie-card';
 import {filmsPropTypes, filmPropTypes} from '../../utils/prop-types';
 
@@ -7,7 +8,7 @@ const SIMILAR_MOVIES_COUNT = 4;
 const SimilarMovies = (props)=> {
 
   const [activeFilmCard, setActiveFilmCard] = useState({id: ``});
-  const {films, activeFilm} = props;
+  const {films, selectedMovie} = props;
 
   const handleAddActiveCard = (currentTarget) => {
     setActiveFilmCard({...activeFilmCard, id: currentTarget.dataset.filmId});
@@ -19,7 +20,7 @@ const SimilarMovies = (props)=> {
 
   return (
     <div className="catalog__movies-list">
-      {films.filter((element)=>element.genre === activeFilm.genre && element.id !== activeFilm.id)
+      {films.filter((element)=>element.genre === selectedMovie.genre && element.id !== selectedMovie.id)
       .slice(0, SIMILAR_MOVIES_COUNT)
       .map((element)=><MovieCard
         key={element.id}
@@ -32,6 +33,12 @@ const SimilarMovies = (props)=> {
 };
 
 SimilarMovies.propTypes = {...filmsPropTypes,
-  ...filmPropTypes.film};
+  selectedMovie: filmPropTypes.film};
 
-export default SimilarMovies;
+const mapStateToProps = (state) => ({
+  films: state.films,
+  selectedMovie: state.selectedMovie
+});
+
+export {SimilarMovies};
+export default connect(mapStateToProps, null)(SimilarMovies);

@@ -9,8 +9,9 @@ import {reducer} from './store/reducer';
 import {createAPI} from './services/api';
 import {checkAuth} from './store/api-action';
 import {redirect} from "./store/middlewares/redirect";
+import {ActionCreator} from './store/action';
 
-const api = createAPI();
+const api = createAPI(() => store.dispatch(ActionCreator.redirectToRoute(`/not-found`)));
 
 const store = createStore(
     reducer,
