@@ -16,6 +16,11 @@ export const allGenreFilter = {
   ALL_GENRES: `All genres`
 };
 
+export const AuthorizationStatus = {
+  AUTH: `AUTH`,
+  NO_AUTH: `NO_AUTH`,
+};
+
 export const START_COUNT_FILMS_IN_LIST = 8;
 
 export const adaptToClient = (film) => {

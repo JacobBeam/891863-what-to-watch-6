@@ -1,5 +1,6 @@
 import React from 'react';
-import {useHistory, Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
+import PropTypes from 'prop-types';
 import TabsList from '../tabs-list/tabs-list';
 import SimilarMovies from '../similar-movies/similar-movies';
 import {findFilmById} from '../../utils/utils';
@@ -9,10 +10,9 @@ import {filmsPropTypes} from '../../utils/prop-types';
 const MoviePage = (props) => {
 
 
-  const {films} = props;
+  const {films, onFollowingToPlayer} = props;
   const seachId = Number(props.match.params.id);
   const film = findFilmById(films, seachId);
-  const history = useHistory();
 
   return (
     <div>
@@ -47,7 +47,7 @@ const MoviePage = (props) => {
                 <button
                   className="btn btn--play movie-card__button"
                   type="button"
-                  onClick={() => history.push(`/player/${film.id}`)}
+                  onClick={()=>onFollowingToPlayer(film.id)}
                 >
                   <svg viewBox="0 0 19 19" width={19} height={19}>
                     <use xlinkHref="#play-s" />
@@ -102,6 +102,9 @@ const MoviePage = (props) => {
   );
 };
 
-MoviePage.propTypes = filmsPropTypes;
+MoviePage.propTypes = {
+  ...filmsPropTypes,
+  onFollowingToPlayer: PropTypes.func.isRequired
+};
 
 export default MoviePage;
