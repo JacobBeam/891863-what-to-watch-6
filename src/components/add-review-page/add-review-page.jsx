@@ -2,9 +2,10 @@ import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import FormReview from '../form-review/form-review';
-import {filmsPropTypes} from '../../utils/prop-types';
+import PropTypes from 'prop-types';
+import {filmPropTypes} from '../../utils/prop-types';
 import LoadingPage from '../loading-page/loading-page';
-import {fetchFilmById, fetchCommentsOnTheFilm} from '../../store/api-action';
+import {fetchFilmById, fetchFilmComments} from '../../store/api-action';
 
 const AddReviewPage = (props) =>{
 
@@ -66,7 +67,12 @@ const AddReviewPage = (props) =>{
   );
 };
 
-AddReviewPage.propTypes = filmsPropTypes;
+AddReviewPage.propTypes = {
+  isSelectedFilmLoaded: PropTypes.bool.isRequired,
+  selectedMovie: filmPropTypes.film,
+  onLoadFilm: PropTypes.func.isRequired,
+  onLoadComments: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   isSelectedFilmLoaded: state.isSelectedFilmLoaded,
@@ -79,7 +85,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(fetchFilmById(id));
   },
   onLoadComments(id) {
-    dispatch(fetchCommentsOnTheFilm(id));
+    dispatch(fetchFilmComments(id));
   }
 });
 
