@@ -6,7 +6,11 @@ const initialState = {
   films: [],
   isFilmsLoaded: false,
   authorizationStatus: AuthorizationStatus.NO_AUTH,
-  user: {}
+  user: {},
+  selectedMovie: {},
+  isSelectedFilmLoaded: false,
+  isSentComment: false,
+  selectedComments: []
 };
 
 const reducer = (state = initialState, action) => {
@@ -32,6 +36,27 @@ const reducer = (state = initialState, action) => {
         ...state,
         authorizationStatus: action.payload.status,
         user: action.payload.user
+      };
+    case ActionType.SELECT_FILM:
+      return {
+        ...state,
+        selectedMovie: action.payload,
+        isSelectedFilmLoaded: true
+      };
+    case ActionType.POST_COMMENT:
+      return {
+        ...state,
+        isSentComment: false
+      };
+    case ActionType.ENABLE_COMMENT_FLAG:
+      return {
+        ...state,
+        isSentComment: true
+      };
+    case ActionType.LOAD_COMMENTS:
+      return {
+        ...state,
+        selectedComments: action.payload,
       };
   }
 

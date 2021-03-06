@@ -5,10 +5,11 @@ const REQUEST_TIMEOUT = 5000;
 
 const HttpCode = {
   UNAUTHORIZED: 401,
-  BAD_REQUEST: 400
+  BAD_REQUEST: 400,
+  NOT_FOUND: 404
 };
 
-export const createAPI = () => {
+export const createAPI = (onRedirect) => {
   const api = axios.create({
     baseURL: BACKEND_URL,
     timeout: REQUEST_TIMEOUT,
@@ -20,9 +21,8 @@ export const createAPI = () => {
   const onFail = (err) => {
     const {response} = err;
 
-    if (response.status === HttpCode.UNAUTHORIZED ||
-      response.status === HttpCode.BAD_REQUEST) {
-
+    if (response.status === HttpCode.NOT_FOUND) {
+      onRedirect();
       throw err;
     }
 

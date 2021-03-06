@@ -26,3 +26,31 @@ export const logout = () => (dispatch, _getState, api) => (
   api.get(`/logout`)
     .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH)))
 );
+
+export const fetchFilmById = (id) => (dispatch, _getState, api) => (
+  api.get(`/films/${id}`)
+  .then((response) => adaptToClient(response.data))
+  .then((addaptedFilm)=> {
+    dispatch(ActionCreator.selectFilm(addaptedFilm));
+  })
+  .catch()
+);
+
+export const fetchCommentsOnTheFilm = (id) => (dispatch, _getState, api) => (
+  api.get(`/comments/${id}`)
+  .then((response)=> {
+    dispatch(ActionCreator.loadComments(response.data));
+  })
+  .catch()
+);
+
+export const postComment = ({rating, comment}, id) => (dispatch, _getState, api) => (
+  api.post(`/comments/${id}`, {rating, comment})
+    .then((response) => {
+      dispatch(ActionCreator.postComment(response.data));
+      return response;
+    })
+    .then((response) => dispatch(ActionCreator.loadComments(response.data)))
+    .then(() => dispatch(ActionCreator.redirectToRoute(`/films/${id}`)))
+    .catch()
+);

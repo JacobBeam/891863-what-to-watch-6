@@ -1,6 +1,7 @@
 import React from 'react';
 import {conversionMinutes} from '../../utils/utils';
 import {filmPropTypes} from '../../utils/prop-types';
+import {connect} from 'react-redux';
 
 const TabDetails = (props)=>{
 
@@ -43,4 +44,11 @@ const TabDetails = (props)=>{
 
 TabDetails.propTypes = filmPropTypes;
 
-export default TabDetails;
+
+const mapStateToProps = (state) => ({
+  film: state.selectedMovie
+});
+
+
+export {TabDetails};
+export default connect(mapStateToProps, null)(TabDetails);
