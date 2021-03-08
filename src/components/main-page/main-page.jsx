@@ -137,7 +137,7 @@ MainPage.propTypes = {
   onFollowingToPlayer: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
   filteredFilms: filmsPropTypes.films,
-  authorizationStatus: PropTypes.bool.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
   promo: PropTypes.shape({
     name: PropTypes.string,
     posterImage: PropTypes.string,

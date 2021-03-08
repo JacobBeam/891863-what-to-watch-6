@@ -14,7 +14,6 @@ export const fetchPromoFilm = () => (dispatch, _getState, api) => (
   .then((response) => adaptToClient(response.data))
   .then((addaptedFilm)=> {
     dispatch(ActionCreator.loadPromo(addaptedFilm));
-    dispatch(ActionCreator.selectFilm(addaptedFilm));
   })
 );
 

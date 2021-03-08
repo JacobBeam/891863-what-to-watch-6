@@ -11,6 +11,12 @@ export const conversionMinutes = (mins) => {
   return `${hours}h ${minutes}m`;
 };
 
+export const conversionSecondsForVideo = (sec) => {
+  const hours = Math.floor(sec / 60 / 60);
+  const minutes = Math.floor(sec / 60) - (hours * 60);
+  const seconds = Math.floor(sec % 60);
+  return `${hours}:${minutes}:${seconds}`;
+};
 
 export const findRatingLevel = (rating) => {
 
