@@ -1,4 +1,4 @@
-import {RatingLevels, allGenreFilter} from './const';
+import {RatingLevels} from './const';
 
 export const findFilmById = (films, id) => {
   return films.find((element) => element.id === id);
@@ -34,13 +34,4 @@ export const findRatingLevel = (rating) => {
       break;
   }
   return currentRating;
-};
-
-export const filterFilmsByGenre = (genre, films) => {
-
-  if (genre === allGenreFilter.ALL_GENRES) {
-    return films;
-  }
-
-  return films.filter((film)=>film.genre === genre);
 };

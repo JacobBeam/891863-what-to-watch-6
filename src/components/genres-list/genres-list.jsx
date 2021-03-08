@@ -5,6 +5,7 @@ import {allGenreFilter} from '../../utils/const';
 import GenreItem from '../genre-item/genre-item';
 import {filmsPropTypes} from '../../utils/prop-types';
 import {START_COUNT_FILMS_IN_LIST} from '../../utils/const';
+import {getFilms} from '../../store/film-data/selectors';
 
 const GenreList = (props) =>{
 
@@ -35,7 +36,7 @@ GenreList.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  films: state.films,
+  films: getFilms(state),
 });
 
 export {GenreList};

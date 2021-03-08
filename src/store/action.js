@@ -1,14 +1,14 @@
 export const ActionType = {
-  GENRE_CHANGES: `genre/change`,
-  RESET_GENRES: `genre/reset`,
-  LOAD_FILMS: `data/loadFilms`,
+  GENRE_CHANGES: `filmData/changeGenre`,
+  RESET_GENRES: `filmData/resetGenre`,
+  LOAD_FILMS: `filmData/loadFilms`,
   REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
   REDIRECT_TO_ROUTE: `authorization/redirectToRoute`,
-  SELECT_FILM: `data/selectFilm`,
-  POST_COMMENT: `data/postComment`,
-  ENABLE_COMMENT_FLAG: `data/enableCommentFlag`,
-  LOAD_COMMENTS: `data/loadComments`
-
+  SELECT_FILM: `filmData/selectFilm`,
+  POST_COMMENT: `commentData/postComment`,
+  ENABLE_COMMENT_FLAG: `commentData/enableCommentFlag`,
+  LOAD_COMMENTS: `commentData/loadComments`,
+  LOAD_PROMO: `filmData/loadPromo`
 };
 
 export const ActionCreator = {
@@ -47,4 +47,8 @@ export const ActionCreator = {
     type: ActionType.LOAD_COMMENTS,
     payload: comments
   }),
+  loadPromo: (promo)=>({
+    type: ActionType.LOAD_PROMO,
+    payload: promo
+  })
 };

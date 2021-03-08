@@ -4,6 +4,7 @@ import {ActionCreator} from '../../store/action';
 import {allGenreFilter} from '../../utils/const';
 import PropTypes from 'prop-types';
 import {START_COUNT_FILMS_IN_LIST} from '../../utils/const';
+import {getGenre, getFilms} from '../../store/film-data/selectors';
 
 const GenreItem = (props) => {
 
@@ -38,8 +39,8 @@ GenreItem.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  genre: state.genre,
-  films: state.films,
+  genre: getGenre(state),
+  films: getFilms(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

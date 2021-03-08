@@ -54,3 +54,5 @@ export const adaptToClient = (film) => {
 
   return adaptedFilm;
 };
+
+export const amountOfStars = 10;

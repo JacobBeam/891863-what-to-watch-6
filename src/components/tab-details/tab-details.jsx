@@ -2,6 +2,7 @@ import React from 'react';
 import {conversionMinutes} from '../../utils/utils';
 import {filmPropTypes} from '../../utils/prop-types';
 import {connect} from 'react-redux';
+import {getSelectedMovie} from '../../store/film-data/selectors';
 
 const TabDetails = (props)=>{
 
@@ -46,7 +47,7 @@ TabDetails.propTypes = filmPropTypes;
 
 
 const mapStateToProps = (state) => ({
-  film: state.selectedMovie
+  film: getSelectedMovie(state)
 });
 
 

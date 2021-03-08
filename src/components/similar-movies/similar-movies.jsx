@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import MovieCard from '../movie-card/movie-card';
 import {filmsPropTypes, filmPropTypes} from '../../utils/prop-types';
+import {getFilms, getSelectedMovie} from '../../store/film-data/selectors';
 
 const SIMILAR_MOVIES_COUNT = 4;
 
@@ -36,8 +37,8 @@ SimilarMovies.propTypes = {...filmsPropTypes,
   selectedMovie: filmPropTypes.film};
 
 const mapStateToProps = (state) => ({
-  films: state.films,
-  selectedMovie: state.selectedMovie
+  films: getFilms(state),
+  selectedMovie: getSelectedMovie(state)
 });
 
 export {SimilarMovies};

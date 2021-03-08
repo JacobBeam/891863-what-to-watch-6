@@ -2,9 +2,10 @@ import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import FormReview from '../form-review/form-review';
-import {filmsPropTypes} from '../../utils/prop-types';
+import PropTypes from 'prop-types';
 import LoadingPage from '../loading-page/loading-page';
-import {fetchFilmById, fetchCommentsOnTheFilm} from '../../store/api-action';
+import {fetchFilmById, fetchFilmComments} from '../../store/api-action';
+import {getSelectedMovie, getSelectedFilmLoadedStatus} from '../../store/film-data/selectors';
 
 const AddReviewPage = (props) =>{
 
@@ -66,11 +67,39 @@ const AddReviewPage = (props) =>{
   );
 };
 
-AddReviewPage.propTypes = filmsPropTypes;
+AddReviewPage.propTypes = {
+  isSelectedFilmLoaded: PropTypes.bool.isRequired,
+  selectedMovie: PropTypes.shape({
+    name: PropTypes.string,
+    posterImage: PropTypes.string,
+    previewImage: PropTypes.string,
+    backgroundImage: PropTypes.string,
+    backgroundColor: PropTypes.string,
+    description: PropTypes.string,
+    rating: PropTypes.number,
+    scoresCount: PropTypes.number,
+    director: PropTypes.string,
+    starring: PropTypes.arrayOf(PropTypes.string),
+    runTime: PropTypes.number,
+    genre: PropTypes.string,
+    released: PropTypes.number,
+    id: PropTypes.number,
+    isFavorite: PropTypes.bool,
+    videoLink: PropTypes.string,
+    previewVideoLink: PropTypes.string,
+  }),
+  onLoadFilm: PropTypes.func.isRequired,
+  onLoadComments: PropTypes.func.isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired
+    })
+  })
+};
 
 const mapStateToProps = (state) => ({
-  isSelectedFilmLoaded: state.isSelectedFilmLoaded,
-  selectedMovie: state.selectedMovie
+  isSelectedFilmLoaded: getSelectedFilmLoadedStatus(state),
+  selectedMovie: getSelectedMovie(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -79,7 +108,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(fetchFilmById(id));
   },
   onLoadComments(id) {
-    dispatch(fetchCommentsOnTheFilm(id));
+    dispatch(fetchFilmComments(id));
   }
 });
 
