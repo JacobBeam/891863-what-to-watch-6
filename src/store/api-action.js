@@ -9,6 +9,15 @@ export const fetchFilmsList = () => (dispatch, _getState, api) => (
   })
 );
 
+export const fetchPromoFilm = () => (dispatch, _getState, api) => (
+  api.get(`/films/promo`)
+  .then((response) => adaptToClient(response.data))
+  .then((addaptedFilm)=> {
+    dispatch(ActionCreator.loadPromo(addaptedFilm));
+    dispatch(ActionCreator.selectFilm(addaptedFilm));
+  })
+);
+
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(`/login`)
     .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))

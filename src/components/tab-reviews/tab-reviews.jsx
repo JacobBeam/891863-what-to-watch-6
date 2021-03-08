@@ -2,6 +2,7 @@ import React from 'react';
 import Comment from '../comment/comment';
 import {commentsPropTypes} from '../../utils/prop-types';
 import {connect} from 'react-redux';
+import {getSelectedComments} from '../../store/comment-data/selectors';
 
 const TabReviews = (props)=>{
 
@@ -29,7 +30,7 @@ const TabReviews = (props)=>{
 TabReviews.propTypes = commentsPropTypes;
 
 const mapStateToProps = (state) => ({
-  comments: state.selectedComments
+  comments: getSelectedComments(state)
 });
 
 

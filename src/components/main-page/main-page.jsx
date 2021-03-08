@@ -6,8 +6,9 @@ import GenreList from '../genres-list/genres-list';
 import ShowMoreButton from '../show-more-button/show-more-button';
 import {Link} from 'react-router-dom';
 import {filmsPropTypes} from '../../utils/prop-types';
-import {filterFilmsByGenre} from '../../utils/utils';
 import {START_COUNT_FILMS_IN_LIST, AuthorizationStatus} from '../../utils/const';
+import {getfilterFilmsByGenre, getPromo} from '../../store/film-data/selectors';
+import {getAuthorizationStatus} from '../../store/user/selectors';
 
 // Выход из личного кабинета, для тестов. Висит на логотипе в футере
 import {logout} from "../../store/api-action";
@@ -15,9 +16,8 @@ import {logout} from "../../store/api-action";
 const MainPage = (props)=> {
 
   const [countFilmsInFilter, setCountFilmsInFilter] = useState(START_COUNT_FILMS_IN_LIST);
-  const {films, genre, authorizationStatus, onFollowingToMyList, onFollowingToPlayer, onLogout} = props;
+  const {filteredFilms, promo, authorizationStatus, onFollowingToMyList, onFollowingToPlayer, onLogout} = props;
 
-  const filteredFilms = filterFilmsByGenre(genre, films);
 
   const handleLogout = (evt) => {
     evt.preventDefault();
@@ -28,7 +28,7 @@ const MainPage = (props)=> {
     <React.Fragment>
       <section className="movie-card">
         <div className="movie-card__bg">
-          <img src={films[0].backgroundImage} alt={films[0].name} />
+          <img src={promo.backgroundImage} alt={promo.name} />
         </div>
         <h1 className="visually-hidden">WTW</h1>
         <header className="page-header movie-card__head">
@@ -58,13 +58,13 @@ const MainPage = (props)=> {
         <div className="movie-card__wrap">
           <div className="movie-card__info">
             <div className="movie-card__poster">
-              <img src={films[0].posterImage} alt={films[0].name} width="218" height="327" />
+              <img src={promo.posterImage} alt={promo.name} width="218" height="327" />
             </div>
             <div className="movie-card__desc">
-              <h2 className="movie-card__title">{films[0].name}</h2>
+              <h2 className="movie-card__title">{promo.name}</h2>
               <p className="movie-card__meta">
-                <span className="movie-card__genre">{films[0].genre}</span>
-                <span className="movie-card__year">{films[0].released}</span>
+                <span className="movie-card__genre">{promo.genre}</span>
+                <span className="movie-card__year">{promo.released}</span>
               </p>
               <div className="movie-card__buttons">
                 <button
@@ -133,17 +133,36 @@ const MainPage = (props)=> {
 };
 
 MainPage.propTypes = {
-  ...filmsPropTypes,
-  genre: PropTypes.string.isRequired,
   onFollowingToMyList: PropTypes.func.isRequired,
   onFollowingToPlayer: PropTypes.func.isRequired,
-  onLogout: PropTypes.func.isRequired
+  onLogout: PropTypes.func.isRequired,
+  filteredFilms: filmsPropTypes.films,
+  authorizationStatus: PropTypes.bool.isRequired,
+  promo: PropTypes.shape({
+    name: PropTypes.string,
+    posterImage: PropTypes.string,
+    previewImage: PropTypes.string,
+    backgroundImage: PropTypes.string,
+    backgroundColor: PropTypes.string,
+    description: PropTypes.string,
+    rating: PropTypes.number,
+    scoresCount: PropTypes.number,
+    director: PropTypes.string,
+    starring: PropTypes.arrayOf(PropTypes.string),
+    runTime: PropTypes.number,
+    genre: PropTypes.string,
+    released: PropTypes.number,
+    id: PropTypes.number,
+    isFavorite: PropTypes.bool,
+    videoLink: PropTypes.string,
+    previewVideoLink: PropTypes.string,
+  }),
 };
 
 const mapStateToProps = (state) => ({
-  genre: state.genre,
-  films: state.films,
-  authorizationStatus: state.authorizationStatus
+  promo: getPromo(state),
+  authorizationStatus: getAuthorizationStatus(state),
+  filteredFilms: getfilterFilmsByGenre(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

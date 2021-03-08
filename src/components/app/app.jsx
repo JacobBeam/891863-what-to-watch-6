@@ -12,8 +12,9 @@ import AddReviewPage from '../add-review-page/add-review-page';
 import LoadingPage from '../loading-page/loading-page';
 import PrivateRoute from '../private-route/private-route';
 import {filmsPropTypes} from '../../utils/prop-types';
-import {fetchFilmsList} from '../../store/api-action';
+import {fetchFilmsList, fetchPromoFilm} from '../../store/api-action';
 import browserHistory from '../../services/browser-history';
+import {getFilmsLoadedStatus, getFilms} from '../../store/film-data/selectors';
 
 const App = (props)=>{
 
@@ -94,13 +95,14 @@ App.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  isFilmsLoaded: state.isFilmsLoaded,
-  films: state.films
+  isFilmsLoaded: getFilmsLoadedStatus(state),
+  films: getFilms(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onLoadData() {
     dispatch(fetchFilmsList());
+    dispatch(fetchPromoFilm());
   }
 });
 

@@ -7,6 +7,8 @@ import SimilarMovies from '../similar-movies/similar-movies';
 import {fetchFilmById, fetchFilmComments} from '../../store/api-action';
 import {AuthorizationStatus} from '../../utils/const';
 import LoadingPage from '../loading-page/loading-page';
+import {getAuthorizationStatus} from '../../store/user/selectors';
+import {getSelectedFilmLoadedStatus, getSelectedMovie} from '../../store/film-data/selectors';
 
 const MoviePage = (props) => {
 
@@ -168,9 +170,9 @@ MoviePage.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  selectedMovie: state.selectedMovie,
-  isSelectedFilmLoaded: state.isSelectedFilmLoaded,
-  authorizationStatus: state.authorizationStatus,
+  selectedMovie: getSelectedMovie(state),
+  isSelectedFilmLoaded: getSelectedFilmLoadedStatus(state),
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

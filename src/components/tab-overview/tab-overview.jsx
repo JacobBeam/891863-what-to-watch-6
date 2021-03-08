@@ -2,6 +2,7 @@ import React, {Fragment} from 'react';
 import {findRatingLevel} from '../../utils/utils';
 import {filmPropTypes} from '../../utils/prop-types';
 import {connect} from 'react-redux';
+import {getSelectedMovie} from '../../store/film-data/selectors';
 
 const TabOverview = (props)=>{
 
@@ -30,7 +31,7 @@ const TabOverview = (props)=>{
 TabOverview.propTypes = filmPropTypes;
 
 const mapStateToProps = (state) => ({
-  film: state.selectedMovie
+  film: getSelectedMovie(state)
 });
 
 
