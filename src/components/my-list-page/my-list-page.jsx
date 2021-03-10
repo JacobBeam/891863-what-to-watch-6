@@ -1,13 +1,37 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import MovieCard from '../movie-card/movie-card';
 import {filmsPropTypes} from '../../utils/prop-types';
+import {fetchFavoritesFilms} from '../../store/api-action';
+import {ActionCreator} from '../../store/action';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import LoadingPage from '../loading-page/loading-page';
+import {getLoadedFavoritesStatus, getfavoritesFilms} from '../../store/film-data/selectors';
+
 
 const MyListPage = (props) =>{
 
-  const {films} = props;
+  const {isFavoritesFilmsLoaded, favoritesFilms, onLoadFavoritesFilms, onResetLoadedStatus} = props;
 
   const [activeFilmCard, setActiveFilmCard] = useState({id: ``});
+
+  useEffect(() => {
+    onResetLoadedStatus();
+  }, []);
+
+  useEffect(() => {
+
+    if (!isFavoritesFilmsLoaded) {
+      onLoadFavoritesFilms();
+    }
+  }, [isFavoritesFilmsLoaded]);
+
+  if (!isFavoritesFilmsLoaded) {
+    return (
+      <LoadingPage></LoadingPage>
+    );
+  }
 
   const handleAddActiveCard = (currentTarget) => {
     setActiveFilmCard({...activeFilmCard, id: currentTarget.dataset.filmId});
@@ -38,14 +62,13 @@ const MyListPage = (props) =>{
         <h2 className="catalog__title visually-hidden">Catalog</h2>
         <div className="catalog__movies-list">
 
-          {films.filter((film)=>film.isFavorite)
+          {favoritesFilms
           .map((element)=><MovieCard
             key={element.id}
             film={element}
             onAddActiveCard={handleAddActiveCard}
             onDeleteActiveCard={handleDeleteActiveCard}
           ></MovieCard>)}
-
 
         </div>
       </section>
@@ -66,6 +89,26 @@ const MyListPage = (props) =>{
   );
 };
 
-MyListPage.propTypes = filmsPropTypes;
+MyListPage.propTypes = {
+  favoritesFilms: filmsPropTypes.films,
+  isFavoritesFilmsLoaded: PropTypes.bool.isRequired,
+  onLoadFavoritesFilms: PropTypes.func.isRequired,
+  onResetLoadedStatus: PropTypes.func.isRequired
+};
 
-export default MyListPage;
+const mapStateToProps = (state) => ({
+  isFavoritesFilmsLoaded: getLoadedFavoritesStatus(state),
+  favoritesFilms: getfavoritesFilms(state),
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onResetLoadedStatus() {
+    dispatch(ActionCreator.resetLoadedStatus());
+  },
+  onLoadFavoritesFilms() {
+    dispatch(fetchFavoritesFilms());
+  }
+});
+
+export {MyListPage};
+export default connect(mapStateToProps, mapDispatchToProps)(MyListPage);

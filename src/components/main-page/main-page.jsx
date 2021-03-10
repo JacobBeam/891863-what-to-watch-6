@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import MovieList from '../movie-list/movie-list';
@@ -7,8 +7,11 @@ import ShowMoreButton from '../show-more-button/show-more-button';
 import {Link} from 'react-router-dom';
 import {filmsPropTypes} from '../../utils/prop-types';
 import {START_COUNT_FILMS_IN_LIST, AuthorizationStatus} from '../../utils/const';
-import {getfilterFilmsByGenre, getPromo} from '../../store/film-data/selectors';
+import {getfilterFilmsByGenre, getPromo, getLoadedPromoStatus} from '../../store/film-data/selectors';
 import {getAuthorizationStatus} from '../../store/user/selectors';
+import {postFavoriteStatusPromo, fetchPromoFilm} from '../../store/api-action';
+import LoadingPage from '../loading-page/loading-page';
+import {ActionCreator} from '../../store/action';
 
 // Выход из личного кабинета, для тестов. Висит на логотипе в футере
 import {logout} from "../../store/api-action";
@@ -16,8 +19,35 @@ import {logout} from "../../store/api-action";
 const MainPage = (props)=> {
 
   const [countFilmsInFilter, setCountFilmsInFilter] = useState(START_COUNT_FILMS_IN_LIST);
-  const {filteredFilms, promo, authorizationStatus, onFollowingToMyList, onFollowingToPlayer, onLogout} = props;
+  const {
+    filteredFilms,
+    promo,
+    authorizationStatus,
+    onFollowingToMyList,
+    onFollowingToPlayer,
+    onLogout,
+    onChangeFavoriteStatus,
+    onLoadPromo,
+    onResetLoadedStatus,
+    isPromoLoaded
+  } = props;
 
+
+  useEffect(() => {
+    onResetLoadedStatus();
+  }, []);
+
+  useEffect(() => {
+    if (!isPromoLoaded) {
+      onLoadPromo();
+    }
+  }, [isPromoLoaded]);
+
+  if (!isPromoLoaded) {
+    return (
+      <LoadingPage></LoadingPage>
+    );
+  }
 
   const handleLogout = (evt) => {
     evt.preventDefault();
@@ -77,15 +107,18 @@ const MainPage = (props)=> {
                   </svg>
                   <span>Play</span>
                 </button>
-                <button
-                  className="btn btn--list movie-card__button"
-                  type="button"
-                >
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                </button>
+
+                {(authorizationStatus === AuthorizationStatus.AUTH) ?
+                  <button
+                    className="btn btn--list movie-card__button"
+                    type="button"
+                    onClick={()=>onChangeFavoriteStatus(promo.id, promo.isFavorite)}
+                  >
+                    <svg viewBox="0 0 19 20" width="19" height="20">
+                      <use xlinkHref={(promo.isFavorite) ? `#del` : `#add`}></use>
+                    </svg>
+                    <span>My list</span>
+                  </button> : ``}
               </div>
             </div>
           </div>
@@ -157,17 +190,31 @@ MainPage.propTypes = {
     videoLink: PropTypes.string,
     previewVideoLink: PropTypes.string,
   }),
+  onChangeFavoriteStatus: PropTypes.func.isRequired,
+  onLoadPromo: PropTypes.func.isRequired,
+  onResetLoadedStatus: PropTypes.func.isRequired,
+  isPromoLoaded: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
   promo: getPromo(state),
   authorizationStatus: getAuthorizationStatus(state),
-  filteredFilms: getfilterFilmsByGenre(state)
+  filteredFilms: getfilterFilmsByGenre(state),
+  isPromoLoaded: getLoadedPromoStatus(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onLogout() {
     dispatch(logout());
+  },
+  onChangeFavoriteStatus(id, activeStatus) {
+    dispatch(postFavoriteStatusPromo(id, activeStatus));
+  },
+  onLoadPromo() {
+    dispatch(fetchPromoFilm());
+  },
+  onResetLoadedStatus() {
+    dispatch(ActionCreator.resetLoadedStatus());
   }
 });
 

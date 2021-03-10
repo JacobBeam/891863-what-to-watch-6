@@ -7,7 +7,10 @@ const initialState = {
   selectedMovie: {},
   isSelectedFilmLoaded: false,
   genre: allGenreFilter.ALL_GENRES,
-  promo: {}
+  promo: {},
+  isPromoLoaded: false,
+  favoritesFilms: [],
+  isFavoritesFilmsLoaded: false,
 };
 
 const filmData = (state = initialState, action) => {
@@ -34,10 +37,24 @@ const filmData = (state = initialState, action) => {
         ...state,
         genre: allGenreFilter.ALL_GENRES,
       };
+    case ActionType.RESET_LOADED_STATUS:
+      return {
+        ...state,
+        isSelectedFilmLoaded: false,
+        isPromoLoaded: false,
+        isFavoritesFilmsLoaded: false
+      };
     case ActionType.LOAD_PROMO:
       return {
         ...state,
         promo: action.payload,
+        isPromoLoaded: true
+      };
+    case ActionType.LOAD_FAVORITES_FILMS:
+      return {
+        ...state,
+        favoritesFilms: action.payload,
+        isFavoritesFilmsLoaded: true
       };
   }
 

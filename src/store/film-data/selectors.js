@@ -8,6 +8,9 @@ export const getSelectedMovie = (state) => state[NameSpace.FILM_DATA].selectedMo
 export const getSelectedFilmLoadedStatus = (state) => state[NameSpace.FILM_DATA].isSelectedFilmLoaded;
 export const getGenre = (state) => state[NameSpace.FILM_DATA].genre;
 export const getPromo = (state) => state[NameSpace.FILM_DATA].promo;
+export const getLoadedPromoStatus = (state) => state[NameSpace.FILM_DATA].isPromoLoaded;
+export const getfavoritesFilms = (state) => state[NameSpace.FILM_DATA].favoritesFilms;
+export const getLoadedFavoritesStatus = (state) => state[NameSpace.FILM_DATA].isFavoritesFilmsLoaded;
 
 export const getfilterFilmsByGenre = createSelector(
     [getGenre, getFilms],
