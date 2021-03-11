@@ -8,7 +8,9 @@ export const ActionType = {
   POST_COMMENT: `commentData/postComment`,
   ENABLE_COMMENT_FLAG: `commentData/enableCommentFlag`,
   LOAD_COMMENTS: `commentData/loadComments`,
-  LOAD_PROMO: `filmData/loadPromo`
+  LOAD_PROMO: `filmData/loadPromo`,
+  RESET_LOADED_STATUS: `filmData/resetLoadedStatus`,
+  LOAD_FAVORITES_FILMS: `filmData/loadFavoritesFilms`
 };
 
 export const ActionCreator = {
@@ -19,6 +21,9 @@ export const ActionCreator = {
   }),
   resetGenre: () => ({
     type: ActionType.RESET_GENRES,
+  }),
+  resetLoadedStatus: () => ({
+    type: ActionType.RESET_LOADED_STATUS,
   }),
   loadFilms: (films)=>({
     type: ActionType.LOAD_FILMS,
@@ -50,5 +55,9 @@ export const ActionCreator = {
   loadPromo: (promo)=>({
     type: ActionType.LOAD_PROMO,
     payload: promo
-  })
+  }),
+  loadFavoritesFilms: (films)=>({
+    type: ActionType.LOAD_FAVORITES_FILMS,
+    payload: films
+  }),
 };

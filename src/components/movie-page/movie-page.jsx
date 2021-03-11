@@ -4,11 +4,12 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import TabsList from '../tabs-list/tabs-list';
 import SimilarMovies from '../similar-movies/similar-movies';
-import {fetchFilmById, fetchFilmComments} from '../../store/api-action';
+import {fetchFilmById, fetchFilmComments, postFavoriteStatus} from '../../store/api-action';
 import {AuthorizationStatus} from '../../utils/const';
 import LoadingPage from '../loading-page/loading-page';
 import {getAuthorizationStatus} from '../../store/user/selectors';
 import {getSelectedFilmLoadedStatus, getSelectedMovie} from '../../store/film-data/selectors';
+import {ActionCreator} from '../../store/action';
 
 const MoviePage = (props) => {
 
@@ -19,17 +20,23 @@ const MoviePage = (props) => {
     onLoadFilm,
     isSelectedFilmLoaded,
     authorizationStatus,
-    onLoadComments
+    onLoadComments,
+    onResetLoadedStatus,
+    onChangeFavoriteStatus
   } = props;
 
   const seachId = Number(props.match.params.id);
 
   useEffect(() => {
-    if (!isSelectedFilmLoaded) {
+    onResetLoadedStatus();
+  }, []);
+
+  useEffect(() => {
+    if (!isSelectedFilmLoaded || selectedMovie.id !== seachId) {
       onLoadFilm(seachId);
       onLoadComments(seachId);
     }
-  }, [isSelectedFilmLoaded]);
+  }, [isSelectedFilmLoaded, selectedMovie, seachId]);
 
   if (!isSelectedFilmLoaded) {
     return (
@@ -55,17 +62,17 @@ const MoviePage = (props) => {
             </div>
             <div className="user-block">
 
-              {(authorizationStatus === AuthorizationStatus.AUTH) &&
-              <div className="user-block__avatar">
-                <img
-                  src="img/avatar.jpg"
-                  alt="User avatar"
-                  width="63"
-                  height="63"
-                  style={{cursor: `pointer`}}
-                  onClick={()=> onFollowingToMyList()}
-                />
-              </div>
+              {(authorizationStatus === AuthorizationStatus.AUTH) ?
+                <div className="user-block__avatar">
+                  <img
+                    src="img/avatar.jpg"
+                    alt="User avatar"
+                    width="63"
+                    height="63"
+                    style={{cursor: `pointer`}}
+                    onClick={()=> onFollowingToMyList()}
+                  />
+                </div> : <Link to="/login" className="user-block__link">Sign in</Link>
               }
 
             </div>
@@ -88,15 +95,19 @@ const MoviePage = (props) => {
                   </svg>
                   <span>Play</span>
                 </button>
-                <button
-                  className="btn btn--list movie-card__button"
-                  type="button"
-                >
-                  <svg viewBox="0 0 19 20" width={19} height={20}>
-                    <use xlinkHref="#add" />
-                  </svg>
-                  <span>My list</span>
-                </button>
+
+                {(authorizationStatus === AuthorizationStatus.AUTH) ?
+                  <button
+                    className="btn btn--list movie-card__button"
+                    type="button"
+                    onClick={()=>onChangeFavoriteStatus(selectedMovie.id, selectedMovie.isFavorite)}
+                  >
+                    <svg viewBox="0 0 19 20" width="19" height="20">
+                      <use xlinkHref={(selectedMovie.isFavorite) ? `#del` : `#add`}></use>
+                    </svg>
+                    <span>My list</span>
+                  </button> : ``}
+
                 {authorizationStatus === AuthorizationStatus.AUTH && <Link to={`/films/${selectedMovie.id}/review`} className="btn movie-card__button">Add review</Link>}
               </div>
             </div>
@@ -167,6 +178,8 @@ MoviePage.propTypes = {
       id: PropTypes.string.isRequired
     })
   }),
+  onResetLoadedStatus: PropTypes.func.isRequired,
+  onChangeFavoriteStatus: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -181,6 +194,12 @@ const mapDispatchToProps = (dispatch) => ({
   },
   onLoadComments(id) {
     dispatch(fetchFilmComments(id));
+  },
+  onResetLoadedStatus() {
+    dispatch(ActionCreator.resetLoadedStatus());
+  },
+  onChangeFavoriteStatus(id, activeStatus) {
+    dispatch(postFavoriteStatus(id, activeStatus));
   }
 });
 

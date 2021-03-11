@@ -14,7 +14,6 @@ export const fetchPromoFilm = () => (dispatch, _getState, api) => (
   .then((response) => adaptToClient(response.data))
   .then((addaptedFilm)=> {
     dispatch(ActionCreator.loadPromo(addaptedFilm));
-    dispatch(ActionCreator.selectFilm(addaptedFilm));
   })
 );
 
@@ -62,4 +61,30 @@ export const postComment = ({rating, comment}, id) => (dispatch, _getState, api)
     .then((response) => dispatch(ActionCreator.loadComments(response.data)))
     .then(() => dispatch(ActionCreator.redirectToRoute(`/films/${id}`)))
     .catch()
+);
+
+export const postFavoriteStatus = (id, status) => (dispatch, _getState, api) => (
+  api.post(`/favorite/${id}/${Number(!status)}`)
+  .then((response) => adaptToClient(response.data))
+  .then((addaptedFilm)=> {
+    dispatch(ActionCreator.selectFilm(addaptedFilm));
+  })
+  .catch()
+);
+
+export const postFavoriteStatusPromo = (id, activeStatus) => (dispatch, _getState, api) => (
+  api.post(`/favorite/${id}/${Number(!activeStatus)}`)
+  .then((response) => adaptToClient(response.data))
+  .then((addaptedFilm)=> {
+    dispatch(ActionCreator.loadPromo(addaptedFilm));
+  })
+  .catch()
+);
+
+export const fetchFavoritesFilms = () => (dispatch, _getState, api) => (
+  api.get(`/favorite`)
+  .then((response) => response.data.map((film) =>adaptToClient(film)))
+  .then((addaptedFilms)=> {
+    dispatch(ActionCreator.loadFavoritesFilms(addaptedFilms));
+  })
 );
