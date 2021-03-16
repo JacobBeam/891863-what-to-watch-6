@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Switch, Route, Router} from 'react-router-dom';
+import {Switch, Route} from 'react-router-dom';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import MainPage from '../main-page/main-page';
@@ -13,7 +13,6 @@ import LoadingPage from '../loading-page/loading-page';
 import PrivateRoute from '../private-route/private-route';
 import {filmsPropTypes} from '../../utils/prop-types';
 import {fetchFilmsList} from '../../store/api-action';
-import browserHistory from '../../services/browser-history';
 import {getFilmsLoadedStatus, getFilms} from '../../store/film-data/selectors';
 
 const App = (props)=>{
@@ -33,56 +32,54 @@ const App = (props)=>{
   }
 
   return (
-    <Router history={browserHistory}>
-      <Switch>
-        <Route
-          exact
-          path="/"
-          render={({history})=>{
-            return <MainPage
-              onFollowingToMyList={() => history.push(`/mylist`)}
-              onFollowingToPlayer={() => history.push(`/player/${films[0].id}`)}
-            />;
-          }}
-        >
-        </Route>
-        <Route exact path="/login">
-          <SignInPage></SignInPage>
-        </Route>
-        <PrivateRoute exact
-          path="/mylist"
-          render={()=>(<MyListPage></MyListPage>)}
-        ></PrivateRoute>
-        <Route exact path="/films/:id"
-          render= {(prop)=> (
-            <MoviePage
-              {...prop}
-              onFollowingToPlayer= {(film) => prop.history.push(`/player/${film}`)}
-              onFollowingToMyList={() => prop.history.push(`/mylist`)}
-            ></MoviePage>
-          )}>
-        </Route>
-        <PrivateRoute exact path="/films/:id/review"
-          render= {(prop)=> (
-            <AddReviewPage
-              {...prop}
-            ></AddReviewPage>
-          )}>
-        </PrivateRoute>
-        <Route exact path="/player/:id"
-          render= {(prop)=> (
-            <PlayerPage
-              films={films}
-              {...prop}
-              onFollowingGoBack={() => prop.history.goBack()}
-            ></PlayerPage>
-          )}>
-        </Route>
-        <Route>
-          <NotFoundPage></NotFoundPage>
-        </Route>
-      </Switch>
-    </Router>
+    <Switch>
+      <Route
+        exact
+        path="/"
+        render={({history})=>{
+          return <MainPage
+            onFollowingToMyList={() => history.push(`/mylist`)}
+            onFollowingToPlayer={() => history.push(`/player/${films[0].id}`)}
+          />;
+        }}
+      >
+      </Route>
+      <Route exact path="/login">
+        <SignInPage></SignInPage>
+      </Route>
+      <PrivateRoute exact
+        path="/mylist"
+        render={()=>(<MyListPage></MyListPage>)}
+      ></PrivateRoute>
+      <Route exact path="/films/:id"
+        render= {(prop)=> (
+          <MoviePage
+            {...prop}
+            onFollowingToPlayer= {(film) => prop.history.push(`/player/${film}`)}
+            onFollowingToMyList={() => prop.history.push(`/mylist`)}
+          ></MoviePage>
+        )}>
+      </Route>
+      <PrivateRoute exact path="/films/:id/review"
+        render= {(prop)=> (
+          <AddReviewPage
+            {...prop}
+          ></AddReviewPage>
+        )}>
+      </PrivateRoute>
+      <Route exact path="/player/:id"
+        render= {(prop)=> (
+          <PlayerPage
+            films={films}
+            {...prop}
+            onFollowingGoBack={() => prop.history.goBack()}
+          ></PlayerPage>
+        )}>
+      </Route>
+      <Route>
+        <NotFoundPage></NotFoundPage>
+      </Route>
+    </Switch>
   );
 };
 
@@ -93,8 +90,8 @@ App.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
+  films: getFilms(state),
   isFilmsLoaded: getFilmsLoadedStatus(state),
-  films: getFilms(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

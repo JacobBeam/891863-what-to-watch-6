@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should Tab render correctly 1`] = `
+<div>
+  <li
+    class="movie-nav__item movie-nav__item--active"
+  >
+    <a
+      class="movie-nav__link"
+      href="#"
+    >
+      Test
+    </a>
+  </li>
+</div>
+`;

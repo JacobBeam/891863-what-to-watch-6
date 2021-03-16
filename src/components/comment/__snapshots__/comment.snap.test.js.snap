@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should Mistakes render correctly 1`] = `
+<div>
+  <div
+    class="review"
+  >
+    <blockquote
+      class="review__quote"
+    >
+      <p
+        class="review__text"
+      >
+        Test Test Test Test Test Test Test Test
+      </p>
+      <footer
+        class="review__details"
+      >
+        <cite
+          class="review__author"
+        >
+          Test
+        </cite>
+        <time
+          class="review__date"
+          datetime="2019-5-3"
+        >
+          May 8, 2019
+        </time>
+      </footer>
+    </blockquote>
+    <div
+      class="review__rating"
+    >
+      0
+    </div>
+  </div>
+</div>
+`;
