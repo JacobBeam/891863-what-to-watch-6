@@ -8,37 +8,25 @@ import {AuthorizationStatus} from '../../utils/const';
 import App from './app';
 
 const mockStore = configureStore({});
-const films = [{},{}]
-const isFilmsLoaded = true
-const onLoadData = jest.fn()
 
 describe(`Test routing`, () => {
 
+jest.spyOn(redux, `mapStateToProps`);
+const mapStateToProps=jest.fn()
+  //jest.spyOn(redux, `useDispatch`);
   it(`Render 'MainPage' when user navigate to '/' url`, () => {
     const history = createMemoryHistory();
-    const store = mockStore({
-      films: [{},{}],
-      isFilmsLoaded: false,
-      selectedMovie: {},
-      isSelectedFilmLoaded: false,
-      genre: `All genres`,
-      promo: {},
-      isPromoLoaded: false,
-      favoritesFilms: [],
-      isFavoritesFilmsLoaded: false,
-    })
-
 
 
 
     render(
-        <redux.Provider store={store}>
+        <redux.Provider store={mockStore({})}>
           <Router history={history}>
-            <App films={films} isFilmsLoaded={isFilmsLoaded} onLoadData={onLoadData} />
+            <App/>
           </Router>
         </redux.Provider>
     );
 
-    expect(screen.getByText(new RegExp(`my list`, `i`))).toBeInTheDocument();
+    expect(screen.getByText(/my list/i).toBeInTheDocument());
   });
 });

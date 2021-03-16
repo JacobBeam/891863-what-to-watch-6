@@ -1,7 +1,5 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Switch, Route} from 'react-router-dom';
-import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
 import MainPage from '../main-page/main-page';
 import MoviePage from '../movie-page/movie-page';
 import MyListPage from '../my-list-page/my-list-page';
@@ -9,37 +7,20 @@ import NotFoundPage from '../not-found-page/not-found-page';
 import PlayerPage from '../player-page/player-page';
 import SignInPage from '../sign-in-page/sign-in-page';
 import AddReviewPage from '../add-review-page/add-review-page';
-import LoadingPage from '../loading-page/loading-page';
 import PrivateRoute from '../private-route/private-route';
-import {filmsPropTypes} from '../../utils/prop-types';
-import {fetchFilmsList} from '../../store/api-action';
-import {getFilmsLoadedStatus, getFilms} from '../../store/film-data/selectors';
 
-const App = (props)=>{
-
-  const {films, isFilmsLoaded, onLoadData} = props;
-
-  useEffect(() => {
-    if (!isFilmsLoaded) {
-      onLoadData();
-    }
-  }, [isFilmsLoaded]);
-
-  if (!isFilmsLoaded) {
-    return (
-      <LoadingPage></LoadingPage>
-    );
-  }
+const App = ()=>{
 
   return (
     <Switch>
       <Route
         exact
         path="/"
-        render={({history})=>{
+        render={(prop)=>{
           return <MainPage
-            onFollowingToMyList={() => history.push(`/mylist`)}
-            onFollowingToPlayer={() => history.push(`/player/${films[0].id}`)}
+          {...prop}
+            onFollowingToMyList={() => prop.history.push(`/mylist`)}
+            onFollowingToPlayer={(promo) => prop.history.push(`/player/${promo.id}`)}
           />;
         }}
       >
@@ -70,8 +51,7 @@ const App = (props)=>{
       <Route exact path="/player/:id"
         render= {(prop)=> (
           <PlayerPage
-            films={films}
-            {...prop}
+             {...prop}
             onFollowingGoBack={() => prop.history.goBack()}
           ></PlayerPage>
         )}>
@@ -83,22 +63,4 @@ const App = (props)=>{
   );
 };
 
-App.propTypes = {
-  ...filmsPropTypes,
-  isFilmsLoaded: PropTypes.bool.isRequired,
-  onLoadData: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  films: getFilms(state),
-  isFilmsLoaded: getFilmsLoadedStatus(state),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onLoadData() {
-    dispatch(fetchFilmsList());
-  }
-});
-
-export {App};
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

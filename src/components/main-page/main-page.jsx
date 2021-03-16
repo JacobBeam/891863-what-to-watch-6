@@ -7,9 +7,9 @@ import ShowMoreButton from '../show-more-button/show-more-button';
 import {Link} from 'react-router-dom';
 import {filmsPropTypes} from '../../utils/prop-types';
 import {START_COUNT_FILMS_IN_LIST, AuthorizationStatus} from '../../utils/const';
-import {getfilterFilmsByGenre, getPromo, getLoadedPromoStatus} from '../../store/film-data/selectors';
+import {getfilterFilmsByGenre, getPromo, getLoadedPromoStatus, getFilmsLoadedStatus} from '../../store/film-data/selectors';
 import {getAuthorizationStatus} from '../../store/user/selectors';
-import {postFavoriteStatusPromo, fetchPromoFilm} from '../../store/api-action';
+import {postFavoriteStatusPromo, fetchPromoFilm, fetchFilmsList} from '../../store/api-action';
 import LoadingPage from '../loading-page/loading-page';
 import {ActionCreator} from '../../store/action';
 
@@ -29,13 +29,22 @@ const MainPage = (props)=> {
     onChangeFavoriteStatus,
     onLoadPromo,
     onResetLoadedStatus,
-    isPromoLoaded
+    isPromoLoaded,
+    isFilmsLoaded,
+    onLoadData
   } = props;
 
 
   useEffect(() => {
+    if (!isFilmsLoaded) {
+      onLoadData();
+    }
+  }, [isFilmsLoaded]);
+
+  useEffect(() => {
     onResetLoadedStatus();
   }, []);
+
 
   useEffect(() => {
     if (!isPromoLoaded) {
@@ -43,11 +52,16 @@ const MainPage = (props)=> {
     }
   }, [isPromoLoaded]);
 
-  if (!isPromoLoaded) {
+
+
+  if (!isPromoLoaded || !isFilmsLoaded) {
     return (
       <LoadingPage></LoadingPage>
     );
   }
+
+
+
 
   const handleLogout = (evt) => {
     evt.preventDefault();
@@ -100,7 +114,7 @@ const MainPage = (props)=> {
                 <button
                   className="btn btn--play movie-card__button"
                   type="button"
-                  onClick={() => onFollowingToPlayer()}
+                  onClick={() => onFollowingToPlayer(promo)}
                 >
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
@@ -200,7 +214,8 @@ const mapStateToProps = (state) => ({
   promo: getPromo(state),
   authorizationStatus: getAuthorizationStatus(state),
   filteredFilms: getfilterFilmsByGenre(state),
-  isPromoLoaded: getLoadedPromoStatus(state)
+  isPromoLoaded: getLoadedPromoStatus(state),
+  isFilmsLoaded: getFilmsLoadedStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -215,6 +230,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   onResetLoadedStatus() {
     dispatch(ActionCreator.resetLoadedStatus());
+  },
+  onLoadData() {
+    dispatch(fetchFilmsList());
   }
 });
 
