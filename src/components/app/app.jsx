@@ -18,7 +18,7 @@ const App = ()=>{
         path="/"
         render={(prop)=>{
           return <MainPage
-          {...prop}
+            {...prop}
             onFollowingToMyList={() => prop.history.push(`/mylist`)}
             onFollowingToPlayer={(promo) => prop.history.push(`/player/${promo.id}`)}
           />;
@@ -51,7 +51,7 @@ const App = ()=>{
       <Route exact path="/player/:id"
         render= {(prop)=> (
           <PlayerPage
-             {...prop}
+            {...prop}
             onFollowingGoBack={() => prop.history.goBack()}
           ></PlayerPage>
         )}>

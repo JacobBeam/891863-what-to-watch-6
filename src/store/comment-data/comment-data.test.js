@@ -11,28 +11,23 @@ const comments = [
     "id": 1,
     "user": {
       "id": 13,
-      "name": "Zak"
+      "name": `Zak`
     },
     "rating": 1.4,
-    "comment": "This movie is just plain bad. There must be some big payola going round this awards season. Badly written, average acting at best, all the characters are unrelatable and inlikeable. 2 hours of my life wasted.",
-    "date": "2021-03-07T08:04:28.658Z"
+    "comment": `This movie is just plain bad. There must be some big payola going round this awards season. Badly written, average acting at best, all the characters are unrelatable and inlikeable. 2 hours of my life wasted.`,
+    "date": `2021-03-07T08:04:28.658Z`
   },
   {
     "id": 2,
     "user": {
       "id": 17,
-      "name": "Emely"
+      "name": `Emely`
     },
     "rating": 7.2,
-    "comment": "This movie is just plain bad. There must be some big payola going round this awards season. Badly written, average acting at best, all the characters are unrelatable and inlikeable. 2 hours of my life wasted.",
-    "date": "2021-02-22T08:04:28.658Z"
+    "comment": `This movie is just plain bad. There must be some big payola going round this awards season. Badly written, average acting at best, all the characters are unrelatable and inlikeable. 2 hours of my life wasted.`,
+    "date": `2021-02-22T08:04:28.658Z`
   }
-]
-
-const newComment = {
-  rating: 0,
-  comment: `test comment`
-};
+];
 
 describe(`Reducers work correctly`, () => {
   it(`Reducer without additional parameters should return initial state`, () => {
@@ -80,8 +75,8 @@ describe(`Async operation work correctly`, () => {
     const apiMock = new MockAdapter(api);
     const dispatch = jest.fn();
     const id = 0;
-    const rating = 0
-    const comment = `test`
+    const rating = 0;
+    const comment = `test`;
 
     const postCommentsLoader = postComment({rating, comment}, id);
 

@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should GenreList render correctly 1`] = `
+<div>
+  <ul
+    class="catalog__genres-list"
+  >
+    <li
+      class="catalog__genres-item "
+    >
+      <a
+        class="catalog__genres-link"
+        href="#"
+      >
+        All genres
+      </a>
+    </li>
+  </ul>
+</div>
+`;

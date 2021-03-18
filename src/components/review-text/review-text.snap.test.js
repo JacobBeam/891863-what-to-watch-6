@@ -5,10 +5,10 @@ import ReviewText from './review-text';
 const onChangeInput = jest.fn();
 const isSentComment = true;
 it(`Should ReviewText render correctly`, () => {
-  const { container } = render(
+  const {container} = render(
       <ReviewText
         onChangeInput={onChangeInput}
         isSentComment={isSentComment} />
-);
+  );
   expect(container).toMatchSnapshot();
 });

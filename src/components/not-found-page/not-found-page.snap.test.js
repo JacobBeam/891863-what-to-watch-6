@@ -8,9 +8,9 @@ import NotFoundPage from './not-found-page';
 it(`Should NotFoundPage render correctly`, () => {
   const history = createMemoryHistory();
 
-  const { container } = render(
-    <Router history={history}>
-      <NotFoundPage/>
-    </Router>);
+  const {container} = render(
+      <Router history={history}>
+        <NotFoundPage/>
+      </Router>);
   expect(container).toMatchSnapshot();
 });

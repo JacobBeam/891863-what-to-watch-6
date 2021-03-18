@@ -9,9 +9,9 @@ it(`Should MovieCard render correctly`, () => {
   const history = createMemoryHistory();
 
   render(
-    <Router history={history}>
-      <NotFoundPage/>
-    </Router>);
+      <Router history={history}>
+        <NotFoundPage/>
+      </Router>);
 
   expect(screen.getByText(/404. Page not found/i)).toBeInTheDocument();
 });

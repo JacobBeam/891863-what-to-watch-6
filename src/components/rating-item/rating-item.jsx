@@ -15,7 +15,7 @@ const RatingItem = (props) =>{
 };
 
 RatingItem.propTypes = {
-  isSentComment: PropTypes.bool.isRequired,
+  isSentComment: PropTypes.bool,
   onChangeInput: PropTypes.func.isRequired,
   id: PropTypes.number.isRequired
 };

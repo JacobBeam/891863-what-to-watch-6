@@ -5,10 +5,10 @@ import RatingStars from './rating-stars';
 const onChangeInput = jest.fn();
 const isSentComment = true;
 it(`Should RatingStars render correctly`, () => {
-  const { container } = render(
+  const {container} = render(
       <RatingStars
         onChangeInput={onChangeInput}
         isSentComment={isSentComment} />
- );
+  );
   expect(container).toMatchSnapshot();
 });

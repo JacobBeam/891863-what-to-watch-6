@@ -1,0 +1,84 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should TabsList render correctly 1`] = `
+<div>
+  <div
+    class="movie-card__desc"
+  >
+    <nav
+      class="movie-nav movie-card__nav"
+    >
+      <ul
+        class="movie-nav__list"
+      >
+        <li
+          class="movie-nav__item movie-nav__item--active"
+        >
+          <a
+            class="movie-nav__link"
+            href="#"
+          >
+            Overview
+          </a>
+        </li>
+        <li
+          class="movie-nav__item "
+        >
+          <a
+            class="movie-nav__link"
+            href="#"
+          >
+            Details
+          </a>
+        </li>
+        <li
+          class="movie-nav__item "
+        >
+          <a
+            class="movie-nav__link"
+            href="#"
+          >
+            Reviews
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <div
+      class="movie-rating"
+    >
+      <div
+        class="movie-rating__score"
+      />
+      <p
+        class="movie-rating__meta"
+      >
+        <span
+          class="movie-rating__level"
+        />
+        <span
+          class="movie-rating__count"
+        >
+           ratings
+        </span>
+      </p>
+    </div>
+    <div
+      class="movie-card__text"
+    >
+      <p />
+      <p
+        class="movie-card__director"
+      >
+        <strong>
+          Director: 
+        </strong>
+      </p>
+      <p
+        class="movie-card__starring"
+      >
+        <strong />
+      </p>
+    </div>
+  </div>
+</div>
+`;

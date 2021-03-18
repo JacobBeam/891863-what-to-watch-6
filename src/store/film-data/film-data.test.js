@@ -8,100 +8,97 @@ import {fetchFilmsList, fetchPromoFilm, fetchFilmById, postFavoriteStatus, postF
 const api = createAPI(() => {});
 const films = [
   {
-    "name": "Macbeth",
-    "posterImage": "https://assets.htmlacademy.ru/intensives/javascript-3/film/poster/Macbeth.jpg",
-    "previewImage": "https://assets.htmlacademy.ru/intensives/javascript-3/film/preview/macbeth.jpg",
-    "backgroundImage": "https://assets.htmlacademy.ru/intensives/javascript-3/film/background/Macbeth.jpg",
-    "backgroundColor": "#F1E9CE",
-    "description": "Macbeth, the Thane of Glamis, receives a prophecy from a trio of witches that one day he will become King of Scotland. Consumed by ambition and spurred to action by his wife, Macbeth murders his king and takes the throne for himself.",
+    "name": `Macbeth`,
+    "posterImage": `https://assets.htmlacademy.ru/intensives/javascript-3/film/poster/Macbeth.jpg`,
+    "previewImage": `https://assets.htmlacademy.ru/intensives/javascript-3/film/preview/macbeth.jpg`,
+    "backgroundImage": `https://assets.htmlacademy.ru/intensives/javascript-3/film/background/Macbeth.jpg`,
+    "backgroundColor": `#F1E9CE`,
+    "description": `Macbeth, the Thane of Glamis, receives a prophecy from a trio of witches that one day he will become King of Scotland. Consumed by ambition and spurred to action by his wife, Macbeth murders his king and takes the throne for himself.`,
     "rating": 3.3,
     "scoresCount": 48798,
-    "director": "Justin Kurzel",
+    "director": `Justin Kurzel`,
     "starring": [
-      "Michael Fassbender",
-      "Marion Cotillard",
-      "Jack Madigan"
+      `Michael Fassbender`,
+      `Marion Cotillard`,
+      `Jack Madigan`
     ],
     "runTime": 113,
-    "genre": "Drama",
+    "genre": `Drama`,
     "released": 2015,
     "id": 1,
     "isFavorite": false,
-    "videoLink": "http://peach.themazzone.com/durian/movies/sintel-1024-surround.mp4",
-    "previewVideoLink": "https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm"
+    "videoLink": `http://peach.themazzone.com/durian/movies/sintel-1024-surround.mp4`,
+    "previewVideoLink": `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`
   },
   {
-    "name": "Beach",
-    "posterImage": "https://assets.htmlacademy.ru/intensives/javascript-3/film/poster/beach.jpg",
-    "previewImage": "https://assets.htmlacademy.ru/intensives/javascript-3/film/preview/beach.jpg",
-    "backgroundImage": "https://assets.htmlacademy.ru/intensives/javascript-3/film/background/beach.jpg",
-    "backgroundColor": "#EBC996",
-    "description": "Vicenarian Richard travels to Thailand and finds himself in possession of a strange map. Rumours state that it leads to a solitary beach paradise, a tropical bliss. Excited and intrigued, he sets out to find it.",
+    "name": `Beach`,
+    "posterImage": `https://assets.htmlacademy.ru/intensives/javascript-3/film/poster/beach.jpg`,
+    "previewImage": `https://assets.htmlacademy.ru/intensives/javascript-3/film/preview/beach.jpg`,
+    "backgroundImage": `https://assets.htmlacademy.ru/intensives/javascript-3/film/background/beach.jpg`,
+    "backgroundColor": `EBC996`,
+    "description": `Vicenarian Richard travels to Thailand and finds himself in possession of a strange map. Rumours state that it leads to a solitary beach paradise, a tropical bliss. Excited and intrigued, he sets out to find it.`,
     "rating": 3.3,
     "scoresCount": 207824,
-    "director": "Danny Boyle",
+    "director": `Danny Boyle`,
     "starring": [
-      "Leonardo DiCaprio",
-      "Daniel York",
-      "Patcharawan Patarakijjanon"
+      `Leonardo DiCaprio`,
+      `Patcharawan Patarakijjanon`
     ],
     "runTime": 119,
-    "genre": "Adventure",
+    "genre": `Adventure`,
     "released": 2000,
     "id": 2,
     "isFavorite": false,
-    "videoLink": "http://media.xiph.org/mango/tears_of_steel_1080p.webm",
-    "previewVideoLink": "https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm"
+    "videoLink": `http://media.xiph.org/mango/tears_of_steel_1080p.webm`,
+    "previewVideoLink": `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`
   }];
 
-  const filmFromServer = {
-    "name": "Beach",
-    "poster_image": "https://assets.htmlacademy.ru/intensives/javascript-3/film/poster/beach.jpg",
-    "preview_image": "https://assets.htmlacademy.ru/intensives/javascript-3/film/preview/beach.jpg",
-    "background_image": "https://assets.htmlacademy.ru/intensives/javascript-3/film/background/beach.jpg",
-    "background_color": "#EBC996",
-    "description": "Vicenarian Richard travels to Thailand and finds himself in possession of a strange map. Rumours state that it leads to a solitary beach paradise, a tropical bliss. Excited and intrigued, he sets out to find it.",
-    "rating": 3.3,
-    "scores_count": 207824,
-    "director": "Danny Boyle",
-    "starring": [
-      "Leonardo DiCaprio",
-      "Daniel York",
-      "Patcharawan Patarakijjanon"
-    ],
-    "run_time": 119,
-    "genre": "Adventure",
-    "released": 2000,
-    "id": 0,
-    "is_favorite": false,
-    "video_link": "http://media.xiph.org/mango/tears_of_steel_1080p.webm",
-    "preview_video_link": "https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm"
-  };
+const filmFromServer = {
+  "name": `Beach`,
+  "poster_image": `https://assets.htmlacademy.ru/intensives/javascript-3/film/poster/beach.jpg`,
+  "preview_image": `https://assets.htmlacademy.ru/intensives/javascript-3/film/preview/beach.jpg`,
+  "background_image": `https://assets.htmlacademy.ru/intensives/javascript-3/film/background/beach.jpg`,
+  "background_color": `#EBC996`,
+  "description": `Vicenarian Richard travels to Thailand and finds himself in possession of a strange map. Rumours state that it leads to a solitary beach paradise, a tropical bliss. Excited and intrigued, he sets out to find it.`,
+  "rating": 3.3,
+  "scores_count": 207824,
+  "director": `Danny Boyle`,
+  "starring": [
+    `Leonardo DiCaprio`,
+    `Patcharawan Patarakijjanon`
+  ],
+  "run_time": 119,
+  "genre": `Adventure`,
+  "released": 2000,
+  "id": 0,
+  "is_favorite": false,
+  "video_link": `http://media.xiph.org/mango/tears_of_steel_1080p.webm`,
+  "preview_video_link": `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`
+};
 
-  const film =
-    {
-      "name": "Beach",
-      "posterImage": "https://assets.htmlacademy.ru/intensives/javascript-3/film/poster/beach.jpg",
-      "previewImage": "https://assets.htmlacademy.ru/intensives/javascript-3/film/preview/beach.jpg",
-      "backgroundImage": "https://assets.htmlacademy.ru/intensives/javascript-3/film/background/beach.jpg",
-      "backgroundColor": "#EBC996",
-      "description": "Vicenarian Richard travels to Thailand and finds himself in possession of a strange map. Rumours state that it leads to a solitary beach paradise, a tropical bliss. Excited and intrigued, he sets out to find it.",
-      "rating": 3.3,
-      "scoresCount": 207824,
-      "director": "Danny Boyle",
-      "starring": [
-        "Leonardo DiCaprio",
-        "Daniel York",
-        "Patcharawan Patarakijjanon"
-      ],
-      "runTime": 119,
-      "genre": "Adventure",
-      "released": 2000,
-      "id": 0,
-      "isFavorite": false,
-      "videoLink": "http://media.xiph.org/mango/tears_of_steel_1080p.webm",
-      "previewVideoLink": "https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm"
-    }
+const film =
+{
+  "name": `Beach`,
+  "posterImage": `https://assets.htmlacademy.ru/intensives/javascript-3/film/poster/beach.jpg`,
+  "previewImage": `https://assets.htmlacademy.ru/intensives/javascript-3/film/preview/beach.jpg`,
+  "backgroundImage": `https://assets.htmlacademy.ru/intensives/javascript-3/film/background/beach.jpg`,
+  "backgroundColor": `#EBC996`,
+  "description": `Vicenarian Richard travels to Thailand and finds himself in possession of a strange map. Rumours state that it leads to a solitary beach paradise, a tropical bliss. Excited and intrigued, he sets out to find it.`,
+  "rating": 3.3,
+  "scoresCount": 207824,
+  "director": `Danny Boyle`,
+  "starring": [
+    `Leonardo DiCaprio`,
+    `Patcharawan Patarakijjanon`
+  ],
+  "runTime": 119,
+  "genre": `Adventure`,
+  "released": 2000,
+  "id": 0,
+  "isFavorite": false,
+  "videoLink": `http://media.xiph.org/mango/tears_of_steel_1080p.webm`,
+  "previewVideoLink": `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`
+};
 
 describe(`Reducers work correctly`, () => {
   it(`Reducer without additional parameters should return initial state`, () => {
@@ -149,7 +146,7 @@ describe(`Reducers work correctly`, () => {
       isFilmsLoaded: false,
       selectedMovie: {},
       isSelectedFilmLoaded: false,
-      genre: 'Test genre',
+      genre: `Test genre`,
       promo: {},
       isPromoLoaded: false,
       favoritesFilms: [],
@@ -174,7 +171,7 @@ describe(`Reducers work correctly`, () => {
       isFilmsLoaded: false,
       selectedMovie: {},
       isSelectedFilmLoaded: true,
-      genre: 'Test genre',
+      genre: `Test genre`,
       promo: {},
       isPromoLoaded: true,
       favoritesFilms: [],
@@ -185,7 +182,7 @@ describe(`Reducers work correctly`, () => {
         isFilmsLoaded: false,
         selectedMovie: {},
         isSelectedFilmLoaded: false,
-        genre: 'Test genre',
+        genre: `Test genre`,
         promo: {},
         isPromoLoaded: false,
         favoritesFilms: [],
@@ -197,7 +194,7 @@ describe(`Reducers work correctly`, () => {
       isFilmsLoaded: false,
       selectedMovie: {},
       isSelectedFilmLoaded: true,
-      genre: 'Test genre',
+      genre: `Test genre`,
       promo: {},
       isPromoLoaded: true,
       favoritesFilms: [],
@@ -213,7 +210,7 @@ describe(`Reducers work correctly`, () => {
         isFilmsLoaded: true,
         selectedMovie: {},
         isSelectedFilmLoaded: true,
-        genre: 'Test genre',
+        genre: `Test genre`,
         promo: {},
         isPromoLoaded: true,
         favoritesFilms: [],
@@ -226,7 +223,7 @@ describe(`Reducers work correctly`, () => {
       isFilmsLoaded: false,
       selectedMovie: {},
       isSelectedFilmLoaded: false,
-      genre: 'Test genre',
+      genre: `Test genre`,
       promo: {},
       isPromoLoaded: true,
       favoritesFilms: [],
@@ -242,7 +239,7 @@ describe(`Reducers work correctly`, () => {
         isFilmsLoaded: false,
         selectedMovie: film,
         isSelectedFilmLoaded: true,
-        genre: 'Test genre',
+        genre: `Test genre`,
         promo: {},
         isPromoLoaded: true,
         favoritesFilms: [],
@@ -255,7 +252,7 @@ describe(`Reducers work correctly`, () => {
       isFilmsLoaded: false,
       selectedMovie: {},
       isSelectedFilmLoaded: false,
-      genre: 'Test genre',
+      genre: `Test genre`,
       promo: {},
       isPromoLoaded: false,
       favoritesFilms: [],
@@ -271,7 +268,7 @@ describe(`Reducers work correctly`, () => {
         isFilmsLoaded: false,
         selectedMovie: {},
         isSelectedFilmLoaded: false,
-        genre: 'Test genre',
+        genre: `Test genre`,
         promo: film,
         isPromoLoaded: true,
         favoritesFilms: [],
@@ -284,7 +281,7 @@ describe(`Reducers work correctly`, () => {
       isFilmsLoaded: false,
       selectedMovie: {},
       isSelectedFilmLoaded: false,
-      genre: 'Test genre',
+      genre: `Test genre`,
       promo: {},
       isPromoLoaded: false,
       favoritesFilms: [],
@@ -300,7 +297,7 @@ describe(`Reducers work correctly`, () => {
         isFilmsLoaded: false,
         selectedMovie: {},
         isSelectedFilmLoaded: false,
-        genre: 'Test genre',
+        genre: `Test genre`,
         promo: {},
         isPromoLoaded: false,
         favoritesFilms: films,
@@ -308,9 +305,8 @@ describe(`Reducers work correctly`, () => {
       });
   });
   it(`The adapter worked correctly`, () => {
-
-      expect (adaptToClient(filmFromServer))
-      .toEqual(film)
+    expect(adaptToClient(filmFromServer))
+      .toEqual(film);
   });
 });
 
@@ -356,7 +352,7 @@ describe(`Async operation work correctly`, () => {
   it(`Should make a correct API call to /films/id`, () => {
     const apiMock = new MockAdapter(api);
     const dispatch = jest.fn();
-    const id = 0
+    const id = 0;
     const filmByIdLoader = fetchFilmById(id);
 
 
@@ -396,7 +392,7 @@ describe(`Async operation work correctly`, () => {
       });
   });
 
-  it(`Should make a correct API call to /favorite/id/status for promo` , () => {
+  it(`Should make a correct API call to /favorite/id/status for promo`, () => {
     const apiMock = new MockAdapter(api);
     const dispatch = jest.fn();
     const id = 0;
@@ -418,7 +414,7 @@ describe(`Async operation work correctly`, () => {
       });
   });
 
-  it(`Should make a correct API call to /favorite` , () => {
+  it(`Should make a correct API call to /favorite`, () => {
     const apiMock = new MockAdapter(api);
     const dispatch = jest.fn();
     const favoritesLoader = fetchFavoritesFilms();

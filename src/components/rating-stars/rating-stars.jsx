@@ -24,7 +24,7 @@ const RatingStars = (props) =>{
 };
 
 RatingStars.propTypes = {
-  isSentComment: PropTypes.bool.isRequired,
+  isSentComment: PropTypes.bool,
   onChangeInput: PropTypes.func.isRequired
 };
 

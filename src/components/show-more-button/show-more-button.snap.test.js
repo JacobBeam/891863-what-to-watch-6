@@ -5,7 +5,7 @@ import ShowMoreButton from './show-more-button';
 const countFilmsInList = 2;
 const setCountFilmsInList = jest.fn();
 it(`Should ShowMoreButton render correctly`, () => {
-  const { container } = render(
+  const {container} = render(
       <ShowMoreButton
         countFilmsInList={countFilmsInList}
         setCountFilmsInList={setCountFilmsInList} />

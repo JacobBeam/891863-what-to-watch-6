@@ -12,8 +12,8 @@ const ReviewText = (props)=> {
 };
 
 ReviewText.propTypes = {
-  isSentComment: PropTypes.bool.isRequired,
-  onChangeInput: PropTypes.func.isRequired
+  isSentComment: PropTypes.bool,
+  onChangeInput: PropTypes.func
 };
 
 

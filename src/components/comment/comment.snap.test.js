@@ -6,11 +6,11 @@ const comment = {
   "id": 1,
   "user": {
     "id": 4,
-    "name": "Test"
+    "name": `Test`
   },
   "rating": 0,
-  "comment": "Test Test Test Test Test Test Test Test",
-  "date": "2019-05-08T14:13:56.569Z"
+  "comment": `Test Test Test Test Test Test Test Test`,
+  "date": `2019-05-08T14:13:56.569Z`
 };
 
 it(`Should Comment render correctly`, () => {

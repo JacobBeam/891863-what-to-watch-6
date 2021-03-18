@@ -4,7 +4,7 @@ import LoadingPage from './loading-page';
 
 it(`LoadingPage should render correctly`, () => {
 
- render (<LoadingPage />);
+  render(<LoadingPage />);
 
   expect(screen.getByText(/Wait, please. Loading.../i)).toBeInTheDocument();
 });

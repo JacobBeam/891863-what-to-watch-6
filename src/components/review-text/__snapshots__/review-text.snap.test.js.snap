@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Should MovieCard render correctly 1`] = `
+exports[`Should ReviewText render correctly 1`] = `
 <div>
   <textarea
     class="add-review__textarea"

@@ -70,7 +70,7 @@ const FormReview = (props)=>{
 };
 
 FormReview.propTypes = {
-  isSentComment: PropTypes.bool.isRequired,
+  isSentComment: PropTypes.bool,
   selectedMovie: filmPropTypes.film,
   enableCommentFlag: PropTypes.func.isRequired,
   onSubmitReview: PropTypes.func.isRequired
