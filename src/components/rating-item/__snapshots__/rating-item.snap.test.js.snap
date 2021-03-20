@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should RatingItem render correctly 1`] = `
+<div>
+  <input
+    class="rating__input"
+    disabled=""
+    id="star-1"
+    name="rating"
+    type="radio"
+    value="1"
+  />
+  <label
+    class="rating__label"
+    for="star-1"
+  >
+    Rating 
+    1
+  </label>
+</div>
+`;

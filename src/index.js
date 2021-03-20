@@ -10,6 +10,8 @@ import {createAPI} from './services/api';
 import {checkAuth} from './store/api-action';
 import {redirect} from "./store/middlewares/redirect";
 import {ActionCreator} from './store/action';
+import {Router} from 'react-router-dom';
+import browserHistory from '../src/services/browser-history';
 
 const api = createAPI(() => store.dispatch(ActionCreator.redirectToRoute(`/not-found`)));
 
@@ -25,7 +27,9 @@ store.dispatch(checkAuth());
 
 ReactDOM.render(
     <Provider store={store}>
-      <App></App>
+      <Router history={browserHistory}>
+        <App></App>
+      </Router>
     </Provider>,
     document.querySelector(`#root`)
 );

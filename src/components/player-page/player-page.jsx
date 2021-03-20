@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {getSelectedFilmLoadedStatus, getSelectedMovie} from '../../store/film-data/selectors';
 import {fetchFilmById, fetchFilmComments} from '../../store/api-action';
 import LoadingPage from '../loading-page/loading-page';
-import {conversionSecondsForVideo} from '../../utils/utils';
+import {convertSecondsForVideo} from '../../utils/utils';
 
 const PlayerPage = (props) => {
 
@@ -56,7 +56,7 @@ const PlayerPage = (props) => {
 
   const handleProgressUpdate = () => {
     setProgress((fullVideoRef.current.currentTime / fullVideoRef.current.duration) * 100);
-    setElapsedTime(conversionSecondsForVideo(fullVideoRef.current.duration - fullVideoRef.current.currentTime));
+    setElapsedTime(convertSecondsForVideo(fullVideoRef.current.duration - fullVideoRef.current.currentTime));
   };
 
 

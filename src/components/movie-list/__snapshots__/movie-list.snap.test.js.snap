@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should MovieList render correctly 1`] = `
+<div>
+  <div
+    class="catalog__movies-list"
+  >
+    <article
+      class="small-movie-card catalog__movies-card"
+      data-film-id="0"
+    >
+      <video
+        height="175"
+        width="280"
+      />
+      <h3
+        class="small-movie-card__title"
+      >
+        <a
+          class="small-movie-card__link"
+          href="/films/0"
+        />
+      </h3>
+    </article>
+    <article
+      class="small-movie-card catalog__movies-card"
+      data-film-id="1"
+    >
+      <video
+        height="175"
+        width="280"
+      />
+      <h3
+        class="small-movie-card__title"
+      >
+        <a
+          class="small-movie-card__link"
+          href="/films/1"
+        />
+      </h3>
+    </article>
+  </div>
+</div>
+`;

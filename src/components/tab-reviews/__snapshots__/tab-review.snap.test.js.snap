@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should TabReviews render correctly 1`] = `
+<div>
+  <div
+    class="movie-card__reviews movie-card__row"
+  >
+    <div
+      class="movie-card__reviews-col"
+    />
+    <div
+      class="movie-card__reviews-col"
+    />
+  </div>
+</div>
+`;

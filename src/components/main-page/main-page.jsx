@@ -1,17 +1,15 @@
 import React, {useState, useEffect} from 'react';
-import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import MovieList from '../movie-list/movie-list';
 import GenreList from '../genres-list/genres-list';
 import ShowMoreButton from '../show-more-button/show-more-button';
 import {Link} from 'react-router-dom';
-import {filmsPropTypes} from '../../utils/prop-types';
 import {START_COUNT_FILMS_IN_LIST, AuthorizationStatus} from '../../utils/const';
-import {getfilterFilmsByGenre, getPromo, getLoadedPromoStatus} from '../../store/film-data/selectors';
-import {getAuthorizationStatus} from '../../store/user/selectors';
-import {postFavoriteStatusPromo, fetchPromoFilm} from '../../store/api-action';
+import {getfilterFilmsByGenre} from '../../store/film-data/selectors';
+import {postFavoriteStatusPromo, fetchPromoFilm, fetchFilmsList} from '../../store/api-action';
 import LoadingPage from '../loading-page/loading-page';
 import {ActionCreator} from '../../store/action';
+import {useSelector, useDispatch} from 'react-redux';
 
 // Выход из личного кабинета, для тестов. Висит на логотипе в футере
 import {logout} from "../../store/api-action";
@@ -20,30 +18,33 @@ const MainPage = (props)=> {
 
   const [countFilmsInFilter, setCountFilmsInFilter] = useState(START_COUNT_FILMS_IN_LIST);
   const {
-    filteredFilms,
-    promo,
-    authorizationStatus,
     onFollowingToMyList,
     onFollowingToPlayer,
-    onLogout,
-    onChangeFavoriteStatus,
-    onLoadPromo,
-    onResetLoadedStatus,
-    isPromoLoaded
   } = props;
 
+  const {promo, isPromoLoaded, isFilmsLoaded} = useSelector((state) => state.FILM_DATA);
+  const filteredFilms = useSelector(getfilterFilmsByGenre);
+  const {authorizationStatus} = useSelector((state) => state.USER);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    onResetLoadedStatus();
+    if (!isFilmsLoaded) {
+      dispatch(fetchFilmsList());
+    }
+  }, [isFilmsLoaded]);
+
+  useEffect(() => {
+    dispatch(ActionCreator.resetLoadedStatus());
   }, []);
+
 
   useEffect(() => {
     if (!isPromoLoaded) {
-      onLoadPromo();
+      dispatch(fetchPromoFilm());
     }
   }, [isPromoLoaded]);
 
-  if (!isPromoLoaded) {
+  if (!isPromoLoaded || !isFilmsLoaded) {
     return (
       <LoadingPage></LoadingPage>
     );
@@ -51,7 +52,7 @@ const MainPage = (props)=> {
 
   const handleLogout = (evt) => {
     evt.preventDefault();
-    onLogout();
+    dispatch(logout());
   };
 
   return (
@@ -100,7 +101,7 @@ const MainPage = (props)=> {
                 <button
                   className="btn btn--play movie-card__button"
                   type="button"
-                  onClick={() => onFollowingToPlayer()}
+                  onClick={() => onFollowingToPlayer(promo)}
                 >
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
@@ -112,7 +113,7 @@ const MainPage = (props)=> {
                   <button
                     className="btn btn--list movie-card__button"
                     type="button"
-                    onClick={()=>onChangeFavoriteStatus(promo.id, promo.isFavorite)}
+                    onClick={()=> dispatch(postFavoriteStatusPromo(promo.id, promo.isFavorite))}
                   >
                     <svg viewBox="0 0 19 20" width="19" height="20">
                       <use xlinkHref={(promo.isFavorite) ? `#del` : `#add`}></use>
@@ -167,56 +168,7 @@ const MainPage = (props)=> {
 
 MainPage.propTypes = {
   onFollowingToMyList: PropTypes.func.isRequired,
-  onFollowingToPlayer: PropTypes.func.isRequired,
-  onLogout: PropTypes.func.isRequired,
-  filteredFilms: filmsPropTypes.films,
-  authorizationStatus: PropTypes.string.isRequired,
-  promo: PropTypes.shape({
-    name: PropTypes.string,
-    posterImage: PropTypes.string,
-    previewImage: PropTypes.string,
-    backgroundImage: PropTypes.string,
-    backgroundColor: PropTypes.string,
-    description: PropTypes.string,
-    rating: PropTypes.number,
-    scoresCount: PropTypes.number,
-    director: PropTypes.string,
-    starring: PropTypes.arrayOf(PropTypes.string),
-    runTime: PropTypes.number,
-    genre: PropTypes.string,
-    released: PropTypes.number,
-    id: PropTypes.number,
-    isFavorite: PropTypes.bool,
-    videoLink: PropTypes.string,
-    previewVideoLink: PropTypes.string,
-  }),
-  onChangeFavoriteStatus: PropTypes.func.isRequired,
-  onLoadPromo: PropTypes.func.isRequired,
-  onResetLoadedStatus: PropTypes.func.isRequired,
-  isPromoLoaded: PropTypes.bool.isRequired
+  onFollowingToPlayer: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state) => ({
-  promo: getPromo(state),
-  authorizationStatus: getAuthorizationStatus(state),
-  filteredFilms: getfilterFilmsByGenre(state),
-  isPromoLoaded: getLoadedPromoStatus(state)
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onLogout() {
-    dispatch(logout());
-  },
-  onChangeFavoriteStatus(id, activeStatus) {
-    dispatch(postFavoriteStatusPromo(id, activeStatus));
-  },
-  onLoadPromo() {
-    dispatch(fetchPromoFilm());
-  },
-  onResetLoadedStatus() {
-    dispatch(ActionCreator.resetLoadedStatus());
-  }
-});
-
-export {MainPage};
-export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
+export default MainPage;

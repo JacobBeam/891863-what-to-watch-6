@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should MovieCard render correctly 1`] = `
+<div>
+  <article
+    class="small-movie-card catalog__movies-card"
+    data-film-id="0"
+  >
+    <video
+      height="175"
+      width="280"
+    />
+    <h3
+      class="small-movie-card__title"
+    >
+      <a
+        class="small-movie-card__link"
+        href="/films/0"
+      >
+        test
+      </a>
+    </h3>
+  </article>
+</div>
+`;
