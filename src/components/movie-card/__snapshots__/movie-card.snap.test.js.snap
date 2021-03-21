@@ -7,6 +7,7 @@ exports[`Should MovieCard render correctly 1`] = `
     data-film-id="0"
   >
     <video
+      data-testid="videoplayer"
       height="175"
       width="280"
     />
