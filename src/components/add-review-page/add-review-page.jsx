@@ -103,7 +103,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-
   onLoadFilm(id) {
     dispatch(fetchFilmById(id));
   },

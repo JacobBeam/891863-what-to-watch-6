@@ -41,6 +41,7 @@ const VideoPlayer = (props)=> {
         height="175"
         muted
         poster = {previewImage}
+        data-testid="videoplayer"
       >
       </video>
     </Fragment>

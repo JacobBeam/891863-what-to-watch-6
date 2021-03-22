@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import {filmPropTypes} from '../../utils/prop-types';
 import {connect} from 'react-redux';
 import {getSelectedFilmLoadedStatus, getSelectedMovie} from '../../store/film-data/selectors';
-import {fetchFilmById, fetchFilmComments} from '../../store/api-action';
+import {fetchFilmById} from '../../store/api-action';
 import LoadingPage from '../loading-page/loading-page';
 import {convertSecondsForVideo} from '../../utils/utils';
 
 const PlayerPage = (props) => {
 
-  const {selectedMovie, isSelectedFilmLoaded, onLoadFilm, onLoadComments, onFollowingGoBack} = props;
+  const {selectedMovie, isSelectedFilmLoaded, onLoadFilm, onFollowingGoBack} = props;
   const seachId = Number(props.match.params.id);
 
   const [playStatus, setPlayStatus] = useState(false);
@@ -22,7 +22,6 @@ const PlayerPage = (props) => {
   useEffect(() => {
     if (!isSelectedFilmLoaded) {
       onLoadFilm(seachId);
-      onLoadComments(seachId);
     }
   }, [isSelectedFilmLoaded]);
 
@@ -73,6 +72,7 @@ const PlayerPage = (props) => {
       <button
         type="button"
         className="player__exit"
+        data-testid="exit"
         onClick={() => {
           onFollowingGoBack();
           if (fullScreenStatus) {
@@ -101,6 +101,7 @@ const PlayerPage = (props) => {
             type="button"
             className="player__play"
             onClick={() => playVideo()}
+            data-testid="play"
           >
             <svg viewBox="0 0 19 19" width={19} height={19}>
               <use xlinkHref="#play-s" />
@@ -114,6 +115,7 @@ const PlayerPage = (props) => {
             type="button"
             className="player__play"
             onClick={() => pauseVideo()}
+            data-testid="pause"
           >
             <svg viewBox="0 0 14 21" width="14" height="21">
               <use xlinkHref="#pause"></use>
@@ -126,6 +128,7 @@ const PlayerPage = (props) => {
             onClick={() => toggleFullScreen()}
             type="button"
             className="player__full-screen"
+            data-testid="full-screen"
           >
             <svg viewBox="0 0 27 27" width={27} height={27}>
               <use xlinkHref="#full-screen" />
@@ -144,7 +147,6 @@ PlayerPage.propTypes = {
   selectedMovie: filmPropTypes.film,
   isSelectedFilmLoaded: PropTypes.bool.isRequired,
   onLoadFilm: PropTypes.func.isRequired,
-  onLoadComments: PropTypes.func.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string.isRequired
@@ -160,9 +162,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   onLoadFilm(id) {
     dispatch(fetchFilmById(id));
-  },
-  onLoadComments(id) {
-    dispatch(fetchFilmComments(id));
   }
 });
 

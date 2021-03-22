@@ -10,6 +10,7 @@ exports[`Should MovieList render correctly 1`] = `
       data-film-id="0"
     >
       <video
+        data-testid="videoplayer"
         height="175"
         width="280"
       />
@@ -27,6 +28,7 @@ exports[`Should MovieList render correctly 1`] = `
       data-film-id="1"
     >
       <video
+        data-testid="videoplayer"
         height="175"
         width="280"
       />

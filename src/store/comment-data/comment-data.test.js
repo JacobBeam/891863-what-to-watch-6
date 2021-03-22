@@ -37,7 +37,7 @@ describe(`Reducers work correctly`, () => {
         selectedComments: []
       });
   });
-  it(`Reducer should reset genre`, () => {
+  it(`Reducer should enable comment flag`, () => {
     const state = {
       isSentComment: false,
       selectedComments: []

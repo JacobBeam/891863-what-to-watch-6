@@ -81,6 +81,7 @@ const MainPage = (props)=> {
                   height="63"
                   style={{cursor: `pointer`}}
                   onClick={()=> onFollowingToMyList()}
+                  data-testid="my-list"
                 />
               </div> : <Link to="/login" className="user-block__link">Sign in</Link>
             }
@@ -101,6 +102,7 @@ const MainPage = (props)=> {
                 <button
                   className="btn btn--play movie-card__button"
                   type="button"
+                  data-testid="play"
                   onClick={() => onFollowingToPlayer(promo)}
                 >
                   <svg viewBox="0 0 19 19" width="19" height="19">
@@ -114,6 +116,7 @@ const MainPage = (props)=> {
                     className="btn btn--list movie-card__button"
                     type="button"
                     onClick={()=> dispatch(postFavoriteStatusPromo(promo.id, promo.isFavorite))}
+                    data-testid="favorite"
                   >
                     <svg viewBox="0 0 19 20" width="19" height="20">
                       <use xlinkHref={(promo.isFavorite) ? `#del` : `#add`}></use>
