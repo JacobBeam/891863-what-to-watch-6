@@ -7,6 +7,8 @@ import {fetchFilmById} from '../../store/api-action';
 import LoadingPage from '../loading-page/loading-page';
 import {convertSecondsForVideo} from '../../utils/utils';
 
+const startTime = `00:00:00`;
+
 const PlayerPage = (props) => {
 
   const {selectedMovie, isSelectedFilmLoaded, onLoadFilm, onFollowingGoBack} = props;
@@ -14,7 +16,7 @@ const PlayerPage = (props) => {
 
   const [playStatus, setPlayStatus] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [elapsedTime, setElapsedTime] = useState(`00:00:00`);
+  const [elapsedTime, setElapsedTime] = useState(startTime);
   const [fullScreenStatus, setFullScreenStatus] = useState(false);
 
   const fullVideoRef = useRef(``);
@@ -31,17 +33,17 @@ const PlayerPage = (props) => {
     );
   }
 
-  const playVideo = () => {
+  const handleVideoPlay = () => {
     setPlayStatus(true);
     fullVideoRef.current.play();
   };
 
-  const pauseVideo = () => {
+  const handleVideoPause = () => {
     setPlayStatus(false);
     fullVideoRef.current.pause();
   };
 
-  const toggleFullScreen = ()=> {
+  const handleFullScreenToggle = ()=> {
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen();
       setFullScreenStatus(true);
@@ -100,7 +102,7 @@ const PlayerPage = (props) => {
           <button
             type="button"
             className="player__play"
-            onClick={() => playVideo()}
+            onClick={() => handleVideoPlay()}
             data-testid="play"
           >
             <svg viewBox="0 0 19 19" width={19} height={19}>
@@ -114,7 +116,7 @@ const PlayerPage = (props) => {
           <button
             type="button"
             className="player__play"
-            onClick={() => pauseVideo()}
+            onClick={() => handleVideoPause()}
             data-testid="pause"
           >
             <svg viewBox="0 0 14 21" width="14" height="21">
@@ -125,7 +127,7 @@ const PlayerPage = (props) => {
           }
           <div className="player__name">{selectedMovie.name}</div>
           <button
-            onClick={() => toggleFullScreen()}
+            onClick={() => handleFullScreenToggle()}
             type="button"
             className="player__full-screen"
             data-testid="full-screen"
@@ -165,5 +167,4 @@ const mapDispatchToProps = (dispatch) => ({
   }
 });
 
-export {PlayerPage};
 export default connect(mapStateToProps, mapDispatchToProps)(PlayerPage);

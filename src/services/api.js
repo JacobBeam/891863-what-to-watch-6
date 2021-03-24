@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {toast} from './../utils/toast/toast';
 
 const BACKEND_URL = `https://6.react.pages.academy/wtw`;
 const REQUEST_TIMEOUT = 5000;
@@ -9,7 +10,9 @@ const HttpCode = {
   NOT_FOUND: 404
 };
 
-export const createAPI = (onRedirect) => {
+const ERROR_SERVER_CONNECTION = `Server connection error, try again later`;
+
+export const createAPI = (onUnauthorized, onRedirect) => {
   const api = axios.create({
     baseURL: BACKEND_URL,
     timeout: REQUEST_TIMEOUT,
@@ -23,6 +26,16 @@ export const createAPI = (onRedirect) => {
 
     if (response.status === HttpCode.NOT_FOUND) {
       onRedirect();
+      throw err;
+    }
+
+    if (response.status === HttpCode.UNAUTHORIZED) {
+      onUnauthorized();
+      throw err;
+    }
+
+    if (response.status === HttpCode.BAD_REQUEST) {
+      toast(ERROR_SERVER_CONNECTION);
       throw err;
     }
 

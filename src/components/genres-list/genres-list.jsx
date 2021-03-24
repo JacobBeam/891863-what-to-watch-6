@@ -13,7 +13,7 @@ const GenreList = (props) =>{
   const uniqueGenres = Array.from(new Set(films.map((film)=>film.genre)));
   uniqueGenres.unshift(allGenreFilter.ALL_GENRES);
 
-  const handleResetCountFilms = () => {
+  const handleCountFilmsReset = () => {
     setStartCountFilmsInList(START_COUNT_FILMS_IN_LIST);
   };
 
@@ -23,7 +23,7 @@ const GenreList = (props) =>{
         return <GenreItem
           key={element + index}
           name={element}
-          resetCountFilms={handleResetCountFilms}>{element}
+          onResetCountFilms={handleCountFilmsReset}>{element}
         </GenreItem>;
       })}
     </ul>
@@ -39,5 +39,4 @@ const mapStateToProps = (state) => ({
   films: getFilms(state),
 });
 
-export {GenreList};
 export default connect(mapStateToProps, null)(GenreList);

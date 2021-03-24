@@ -26,7 +26,7 @@ const FormReview = (props)=>{
     "rating": null,
   });
 
-  const handleSubmit = (evt) => {
+  const handleFormSubmit = (evt) => {
     evt.preventDefault();
     enableCommentFlag();
     onSubmitReview({
@@ -53,7 +53,7 @@ const FormReview = (props)=>{
     <form
       action="#"
       className="add-review__form"
-      onSubmit={handleSubmit}
+      onSubmit={handleFormSubmit}
       disabled={true}
     >
       <div className="rating">
@@ -90,5 +90,4 @@ const mapDispatchToProps = (dispatch) => ({
   }
 });
 
-export {FormReview};
 export default connect(mapStateToProps, mapDispatchToProps)(FormReview);

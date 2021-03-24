@@ -33,6 +33,4 @@ const mapStateToProps = (state) => ({
   comments: getSelectedComments(state)
 });
 
-
-export {TabReviews};
 export default connect(mapStateToProps, null)(TabReviews);

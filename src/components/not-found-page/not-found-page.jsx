@@ -1,12 +1,13 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import {AppRoute} from '../../utils/const';
 
 const NotFoundPage = () => {
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
         <div className="logo">
-          <Link to="/" className="logo__link">
+          <Link to={AppRoute.ROOT} className="logo__link">
             <span className="logo__letter logo__letter--1">W</span>
             <span className="logo__letter logo__letter--2">T</span>
             <span className="logo__letter logo__letter--3">W</span>
@@ -16,11 +17,11 @@ const NotFoundPage = () => {
       </header>
       <div className="sign-in user-page__content">
         <h2>404. Page not found.</h2>
-        <Link to="/">Вернуться на главную</Link>
+        <Link to={AppRoute.ROOT}>Вернуться на главную</Link>
       </div>
       <footer className="page-footer">
         <div className="logo">
-          <Link to="/" className="logo__link logo__link--light">
+          <Link to={AppRoute.ROOT} className="logo__link logo__link--light">
             <span className="logo__letter logo__letter--1">W</span>
             <span className="logo__letter logo__letter--2">T</span>
             <span className="logo__letter logo__letter--3">W</span>

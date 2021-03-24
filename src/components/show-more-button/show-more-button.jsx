@@ -6,7 +6,7 @@ const ShowMoreButton = (props) => {
 
   const {countFilmsInList, setCountFilmsInList} = props;
 
-  const handleAddMoreFilms = () => {
+  const handleMoreFilmsAdd = () => {
     setCountFilmsInList(countFilmsInList + START_COUNT_FILMS_IN_LIST);
   };
 
@@ -14,7 +14,7 @@ const ShowMoreButton = (props) => {
   return (
     <div className="catalog__more">
       <button className="catalog__button" type="button"
-        onClick={handleAddMoreFilms}
+        onClick={handleMoreFilmsAdd}
       >Show more</button>
     </div>
   );

@@ -33,7 +33,6 @@ const VideoPlayer = (props)=> {
 
   return (
     <Fragment>
-
       <video
         src={previewVideoLink}
         ref={videoRef}

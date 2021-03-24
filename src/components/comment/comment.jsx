@@ -1,12 +1,13 @@
 import React from 'react';
 import {commentPropTypes} from '../../utils/prop-types';
+import {DateFormat} from '../../utils/const';
 
 const Comment = (props)=>{
 
   const {comment} = props;
 
   const dateComment = new Date(Date.parse(comment.date));
-  const formattedDAte = dateComment.toLocaleString(`en-Us`, {month: `long`, year: `numeric`, day: `numeric`});
+  const formattedDAte = dateComment.toLocaleString(DateFormat.ENGLISH, {month: DateFormat.LONG, year: DateFormat.NUMERIC, day: DateFormat.NUMERIC});
 
   return (
     <div className="review">

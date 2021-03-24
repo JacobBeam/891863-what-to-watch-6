@@ -10,6 +10,7 @@ import {postFavoriteStatusPromo, fetchPromoFilm, fetchFilmsList} from '../../sto
 import LoadingPage from '../loading-page/loading-page';
 import {ActionCreator} from '../../store/action';
 import {useSelector, useDispatch} from 'react-redux';
+import {AppRoute} from '../../utils/const';
 
 // Выход из личного кабинета, для тестов. Висит на логотипе в футере
 import {logout} from "../../store/api-action";
@@ -50,7 +51,7 @@ const MainPage = (props)=> {
     );
   }
 
-  const handleLogout = (evt) => {
+  const handleLogoLogout = (evt) => {
     evt.preventDefault();
     dispatch(logout());
   };
@@ -83,7 +84,7 @@ const MainPage = (props)=> {
                   onClick={()=> onFollowingToMyList()}
                   data-testid="my-list"
                 />
-              </div> : <Link to="/login" className="user-block__link">Sign in</Link>
+              </div> : <Link to={AppRoute.LOGIN} className="user-block__link">Sign in</Link>
             }
           </div>
         </header>
@@ -152,7 +153,7 @@ const MainPage = (props)=> {
             <a
               href="#"
               className="logo__link logo__link--light"
-              onClick={handleLogout}
+              onClick={handleLogoLogout}
             >
               <span className="logo__letter logo__letter--1">W</span>
               <span className="logo__letter logo__letter--2">T</span>

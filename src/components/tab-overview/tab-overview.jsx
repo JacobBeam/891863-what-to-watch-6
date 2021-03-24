@@ -34,6 +34,4 @@ const mapStateToProps = (state) => ({
   film: getSelectedMovie(state)
 });
 
-
-export {TabOverview};
 export default connect(mapStateToProps, null)(TabOverview);

@@ -1,42 +1,45 @@
 import {ActionCreator} from './action';
-import {adaptToClient, AuthorizationStatus} from '../utils/const';
+import {adaptToClient, AuthorizationStatus, APIRoute, AppRoute} from '../utils/const';
 
 export const fetchFilmsList = () => (dispatch, _getState, api) => (
-  api.get(`/films`)
+  api.get(APIRoute.FILMS)
   .then((response) => response.data.map((film) =>adaptToClient(film)))
   .then((addaptedFilms)=> {
     dispatch(ActionCreator.loadFilms(addaptedFilms));
   })
+  .catch(() => {})
 );
 
 export const fetchPromoFilm = () => (dispatch, _getState, api) => (
-  api.get(`/films/promo`)
+  api.get(APIRoute.PROMO)
   .then((response) => adaptToClient(response.data))
   .then((addaptedFilm)=> {
     dispatch(ActionCreator.loadPromo(addaptedFilm));
   })
+  .catch()
 );
 
 export const checkAuth = () => (dispatch, _getState, api) => (
-  api.get(`/login`)
+  api.get(APIRoute.LOGIN)
     .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
     .catch(() => {})
 
 );
 
 export const login = ({login: email, password}) => (dispatch, _getState, api) => (
-  api.post(`/login`, {email, password})
+  api.post(APIRoute.LOGIN, {email, password})
     .then((response) => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH, response.data)))
-    .then(() => dispatch(ActionCreator.redirectToRoute(`/`)))
+    .then(() => dispatch(ActionCreator.redirectToRoute(AppRoute.ROOT)))
+    .catch(() => {})
 );
 
 export const logout = () => (dispatch, _getState, api) => (
-  api.get(`/logout`)
+  api.get(APIRoute.LOGOUT)
     .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH)))
 );
 
 export const fetchFilmById = (id) => (dispatch, _getState, api) => (
-  api.get(`/films/${id}`)
+  api.get(`${APIRoute.FILMS}/${id}`)
   .then((response) => adaptToClient(response.data))
   .then((addaptedFilm)=> {
     dispatch(ActionCreator.selectFilm(addaptedFilm));
@@ -45,7 +48,7 @@ export const fetchFilmById = (id) => (dispatch, _getState, api) => (
 );
 
 export const fetchFilmComments = (id) => (dispatch, _getState, api) => (
-  api.get(`/comments/${id}`)
+  api.get(`${APIRoute.COMMENTS}/${id}`)
   .then((response)=> {
     dispatch(ActionCreator.loadComments(response.data));
   })
@@ -53,18 +56,18 @@ export const fetchFilmComments = (id) => (dispatch, _getState, api) => (
 );
 
 export const postComment = ({rating, comment}, id) => (dispatch, _getState, api) => (
-  api.post(`/comments/${id}`, {rating, comment})
+  api.post(`${APIRoute.COMMENTS}/${id}`, {rating, comment})
     .then((response) => {
       dispatch(ActionCreator.postComment(response.data));
       return response;
     })
     .then((response) => dispatch(ActionCreator.loadComments(response.data)))
-    .then(() => dispatch(ActionCreator.redirectToRoute(`/films/${id}`)))
+    .then(() => dispatch(ActionCreator.redirectToRoute(`${APIRoute.FILMS}/${id}`)))
     .catch()
 );
 
 export const postFavoriteStatus = (id, status) => (dispatch, _getState, api) => (
-  api.post(`/favorite/${id}/${Number(!status)}`)
+  api.post(`${APIRoute.FAVORITE}/${id}/${Number(!status)}`)
   .then((response) => adaptToClient(response.data))
   .then((addaptedFilm)=> {
     dispatch(ActionCreator.selectFilm(addaptedFilm));
@@ -73,7 +76,7 @@ export const postFavoriteStatus = (id, status) => (dispatch, _getState, api) => 
 );
 
 export const postFavoriteStatusPromo = (id, activeStatus) => (dispatch, _getState, api) => (
-  api.post(`/favorite/${id}/${Number(!activeStatus)}`)
+  api.post(`${APIRoute.FAVORITE}/${id}/${Number(!activeStatus)}`)
   .then((response) => adaptToClient(response.data))
   .then((addaptedFilm)=> {
     dispatch(ActionCreator.loadPromo(addaptedFilm));
@@ -82,9 +85,10 @@ export const postFavoriteStatusPromo = (id, activeStatus) => (dispatch, _getStat
 );
 
 export const fetchFavoritesFilms = () => (dispatch, _getState, api) => (
-  api.get(`/favorite`)
+  api.get(APIRoute.FAVORITE)
   .then((response) => response.data.map((film) =>adaptToClient(film)))
   .then((addaptedFilms)=> {
     dispatch(ActionCreator.loadFavoritesFilms(addaptedFilms));
   })
+  .catch(() => {})
 );
