@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import {filmPropTypes} from '../../utils/prop-types';
 import VideoPlayer from '../video-player/video-player';
+import {AppRoute} from '../../utils/const';
 
 const MovieCard = (props) =>{
   const {film, onAddActiveCard, onDeleteActiveCard} = props;
@@ -16,15 +17,22 @@ const MovieCard = (props) =>{
     onDeleteActiveCard();
   };
 
+  const history = useHistory();
+  const handleCardClick = (() => {
+    history.push(`${AppRoute.FILMS}/${id}`);
+  });
+
   return (
+
     <article className="small-movie-card catalog__movies-card" data-film-id={id}
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
+      onClick={handleCardClick}
     >
       <VideoPlayer film={film}>
       </VideoPlayer>
       <h3 className="small-movie-card__title">
-        <Link className="small-movie-card__link" to={`/films/${id}`}
+        <Link className="small-movie-card__link" to={`${AppRoute.FILMS}/${id}`}
         >{name}</Link>
       </h3>
     </article>
@@ -33,8 +41,7 @@ const MovieCard = (props) =>{
 
 MovieCard.propTypes = {...filmPropTypes,
   onAddActiveCard: PropTypes.func.isRequired,
-  onDeleteActiveCard: PropTypes.func.isRequired,
+  onDeleteActiveCard: PropTypes.func.isRequired
 };
-
 
 export default MovieCard;

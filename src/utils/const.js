@@ -56,3 +56,33 @@ export const adaptToClient = (film) => {
 };
 
 export const amountOfStars = 10;
+
+export const AppRoute = {
+  ROOT: `/`,
+  MY_LIST: `/mylist`,
+  PLAYER: `/player`,
+  PLAYER_WITH_PARAMETR: `/player/:id`,
+  FILM_WITH_PARAMETR: `/films/:id`,
+  LOGIN: `/login`,
+  REVIEW_WITH_PARAMETR: `/films/:id/review`,
+  FILMS: `/films`,
+  LOGOUT: `/logout`,
+  REVIEW: `/review`
+};
+
+export const APIRoute = {
+  FILMS: `/films`,
+  LOGIN: `/login`,
+  LOGOUT: `/logout`,
+  PROMO: `/films/promo`,
+  COMMENTS: `/comments`,
+  FAVORITE: `/favorite`
+};
+
+export const DateFormat = {
+  ENGLISH: `en-Us`,
+  LONG: `long`,
+  NUMERIC: `numeric`,
+  HOURS_SHORT: `h`,
+  MINUTS_SHORT: `m`
+};

@@ -6,11 +6,11 @@ const MovieList = (props) => {
   const [activeFilmCard, setActiveFilmCard] = useState({id: ``});
   const {films, countFilmsInList} = props;
 
-  const handleAddActiveCard = (currentTarget) => {
+  const handleActiveCardAdd = (currentTarget) => {
     setActiveFilmCard({...activeFilmCard, id: currentTarget.dataset.filmId});
   };
 
-  const handleDeleteActiveCard = () => {
+  const handleActiveCardDelete = () => {
     setActiveFilmCard({...activeFilmCard, id: ``});
   };
 
@@ -22,8 +22,8 @@ const MovieList = (props) => {
         .map((element)=><MovieCard
           key={element.id}
           film={element}
-          onAddActiveCard={handleAddActiveCard}
-          onDeleteActiveCard={handleDeleteActiveCard}
+          onAddActiveCard={handleActiveCardAdd}
+          onDeleteActiveCard={handleActiveCardDelete}
         ></MovieCard>)
       }
     </div>

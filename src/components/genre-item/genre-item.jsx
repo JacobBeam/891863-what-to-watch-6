@@ -8,11 +8,11 @@ import {getGenre, getFilms} from '../../store/film-data/selectors';
 
 const GenreItem = (props) => {
 
-  const {name, genre, changeGenre, resetGenre, resetCountFilms} = props;
+  const {name, genre, changeGenre, resetGenre, onResetCountFilms} = props;
   const isReset = (name === allGenreFilter.ALL_GENRES) ? true : false;
 
-  const handleResetCountFilms = () => {
-    resetCountFilms(START_COUNT_FILMS_IN_LIST);
+  const handleCountFilmsReset = () => {
+    onResetCountFilms(START_COUNT_FILMS_IN_LIST);
   };
 
   return (
@@ -24,7 +24,7 @@ const GenreItem = (props) => {
         } else {
           changeGenre(name);
         }
-        handleResetCountFilms();
+        handleCountFilmsReset();
       }}>
       <a href="#" className="catalog__genres-link">{name}</a>
     </li>);
@@ -35,7 +35,7 @@ GenreItem.propTypes = {
   genre: PropTypes.string.isRequired,
   changeGenre: PropTypes.func.isRequired,
   resetGenre: PropTypes.func.isRequired,
-  resetCountFilms: PropTypes.func.isRequired
+  onResetCountFilms: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -52,5 +52,4 @@ const mapDispatchToProps = (dispatch) => ({
   }
 });
 
-export {GenreItem};
 export default connect(mapStateToProps, mapDispatchToProps)(GenreItem);

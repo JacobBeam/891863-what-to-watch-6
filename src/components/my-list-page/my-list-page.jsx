@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import MovieCard from '../movie-card/movie-card';
 import {filmsPropTypes} from '../../utils/prop-types';
 import {fetchFavoritesFilms} from '../../store/api-action';
+import {AppRoute} from '../../utils/const';
 import {ActionCreator} from '../../store/action';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
@@ -33,11 +34,11 @@ const MyListPage = (props) =>{
     );
   }
 
-  const handleAddActiveCard = (currentTarget) => {
+  const handleActiveCardAdd = (currentTarget) => {
     setActiveFilmCard({...activeFilmCard, id: currentTarget.dataset.filmId});
   };
 
-  const handleDeleteActiveCard = () => {
+  const handleActiveCardDelete = () => {
     setActiveFilmCard({...activeFilmCard, id: ``});
   };
 
@@ -45,7 +46,7 @@ const MyListPage = (props) =>{
     <div className="user-page">
       <header className="page-header user-page__head">
         <div className="logo">
-          <Link to="/" className="logo__link">
+          <Link to={AppRoute.ROOT} className="logo__link">
             <span className="logo__letter logo__letter--1">W</span>
             <span className="logo__letter logo__letter--2">T</span>
             <span className="logo__letter logo__letter--3">W</span>
@@ -66,15 +67,15 @@ const MyListPage = (props) =>{
           .map((element)=><MovieCard
             key={element.id}
             film={element}
-            onAddActiveCard={handleAddActiveCard}
-            onDeleteActiveCard={handleDeleteActiveCard}
+            onAddActiveCard={handleActiveCardAdd}
+            onDeleteActiveCard={handleActiveCardDelete}
           ></MovieCard>)}
 
         </div>
       </section>
       <footer className="page-footer">
         <div className="logo">
-          <Link to="/" className="logo__link logo__link--light">
+          <Link to={AppRoute.ROOT} className="logo__link logo__link--light">
             <span className="logo__letter logo__letter--1">W</span>
             <span className="logo__letter logo__letter--2">T</span>
             <span className="logo__letter logo__letter--3">W</span>
@@ -110,5 +111,4 @@ const mapDispatchToProps = (dispatch) => ({
   }
 });
 
-export {MyListPage};
 export default connect(mapStateToProps, mapDispatchToProps)(MyListPage);

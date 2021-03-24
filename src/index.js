@@ -12,8 +12,9 @@ import {redirect} from "./store/middlewares/redirect";
 import {ActionCreator} from './store/action';
 import {Router} from 'react-router-dom';
 import browserHistory from '../src/services/browser-history';
+import {AuthorizationStatus} from './utils/const';
 
-const api = createAPI(() => store.dispatch(ActionCreator.redirectToRoute(`/not-found`)));
+const api = createAPI(() => store.dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH)), () => store.dispatch(ActionCreator.redirectToRoute(`/not-found`)));
 
 const store = createStore(
     rootReducer,

@@ -13,14 +13,11 @@ const TabsList = ()=>{
   const setActiveTabPage = (activeElement) =>{
 
     switch (activeElement) {
-
-      case `Overview`:
+      case TabType.OVERVIEW:
         return <TabOverview></TabOverview>;
-
-      case `Details`:
+      case TabType.DETAILS:
         return <TabDetails></TabDetails>;
-
-      case `Reviews`:
+      case TabType.REVIEWS:
         return <TabReviews></TabReviews>;
     }
 
@@ -44,9 +41,7 @@ const TabsList = ()=>{
 
         </ul>
       </nav>
-
       {setActiveTabPage(activeTab)}
-
     </div>
   );
 };

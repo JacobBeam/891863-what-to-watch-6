@@ -1,4 +1,4 @@
-import {RatingLevels} from './const';
+import {RatingLevels, DateFormat} from './const';
 
 export const findFilmById = (films, id) => {
   return films.find((element) => element.id === id);
@@ -8,7 +8,7 @@ export const findFilmById = (films, id) => {
 export const conversionMinutes = (mins) => {
   const hours = Math.trunc(mins / 60);
   const minutes = mins % 60;
-  return `${hours}h ${minutes}m`;
+  return `${hours}${DateFormat.HOURS_SHORT} ${minutes}${DateFormat.MINUTS_SHORT}`;
 };
 
 export const convertSecondsForVideo = (sec) => {

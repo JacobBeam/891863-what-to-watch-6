@@ -12,7 +12,7 @@ const api = jest.fn();
 const middlleware = thunk.withExtraArgument(api);
 const mockStore = configureStore([middlleware]);
 const name = allGenreFilter.ALL_GENRES;
-const resetCountFilms = jest.fn();
+const onResetCountFilms = jest.fn();
 
 it(`Should GenreItem render correctly`, () => {
   const history = createMemoryHistory();
@@ -23,7 +23,7 @@ it(`Should GenreItem render correctly`, () => {
   const {container} = render(
       <redux.Provider store={store}>
         <Router history={history}>
-          <GenreItem name={name} resetCountFilms={resetCountFilms}/>
+          <GenreItem name={name} onResetCountFilms={onResetCountFilms}/>
         </Router>
       </redux.Provider>
   );

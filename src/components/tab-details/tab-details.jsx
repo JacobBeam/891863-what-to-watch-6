@@ -45,11 +45,8 @@ const TabDetails = (props)=>{
 
 TabDetails.propTypes = filmPropTypes;
 
-
 const mapStateToProps = (state) => ({
   film: getSelectedMovie(state)
 });
 
-
-export {TabDetails};
 export default connect(mapStateToProps, null)(TabDetails);

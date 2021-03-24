@@ -16,5 +16,4 @@ ReviewText.propTypes = {
   onChangeInput: PropTypes.func
 };
 
-
 export default React.memo(ReviewText);

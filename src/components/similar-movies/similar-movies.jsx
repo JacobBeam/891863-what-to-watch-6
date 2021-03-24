@@ -11,11 +11,11 @@ const SimilarMovies = (props)=> {
   const [activeFilmCard, setActiveFilmCard] = useState({id: ``});
   const {films, selectedMovie} = props;
 
-  const handleAddActiveCard = (currentTarget) => {
+  const handleActiveCardAdd = (currentTarget) => {
     setActiveFilmCard({...activeFilmCard, id: currentTarget.dataset.filmId});
   };
 
-  const handleDeleteActiveCard = () => {
+  const handleActiveCardDelete = () => {
     setActiveFilmCard({...activeFilmCard, id: ``});
   };
 
@@ -26,8 +26,8 @@ const SimilarMovies = (props)=> {
       .map((element)=><MovieCard
         key={element.id}
         film={element}
-        onAddActiveCard={handleAddActiveCard}
-        onDeleteActiveCard={handleDeleteActiveCard}
+        onAddActiveCard={handleActiveCardAdd}
+        onDeleteActiveCard={handleActiveCardDelete}
       ></MovieCard>)}
     </div>
   );
@@ -41,5 +41,4 @@ const mapStateToProps = (state) => ({
   selectedMovie: getSelectedMovie(state)
 });
 
-export {SimilarMovies};
 export default connect(mapStateToProps, null)(SimilarMovies);

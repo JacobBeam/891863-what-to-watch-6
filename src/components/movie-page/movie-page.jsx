@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import TabsList from '../tabs-list/tabs-list';
 import SimilarMovies from '../similar-movies/similar-movies';
 import {fetchFilmById, fetchFilmComments, postFavoriteStatus} from '../../store/api-action';
-import {AuthorizationStatus} from '../../utils/const';
+import {AuthorizationStatus, AppRoute} from '../../utils/const';
 import LoadingPage from '../loading-page/loading-page';
 import {getAuthorizationStatus} from '../../store/user/selectors';
 import {getSelectedFilmLoadedStatus, getSelectedMovie} from '../../store/film-data/selectors';
@@ -54,7 +54,7 @@ const MoviePage = (props) => {
           <h1 className="visually-hidden">WTW</h1>
           <header className="page-header movie-card__head">
             <div className="logo">
-              <Link to="/" className="logo__link">
+              <Link to={AppRoute.ROOT} className="logo__link">
                 <span className="logo__letter logo__letter--1">W</span>
                 <span className="logo__letter logo__letter--2">T</span>
                 <span className="logo__letter logo__letter--3">W</span>
@@ -72,7 +72,7 @@ const MoviePage = (props) => {
                     style={{cursor: `pointer`}}
                     onClick={()=> onFollowingToMyList()}
                   />
-                </div> : <Link to="/login" className="user-block__link">Sign in</Link>
+                </div> : <Link to={AppRoute.LOGIN} className="user-block__link">Sign in</Link>
               }
 
             </div>
@@ -108,7 +108,7 @@ const MoviePage = (props) => {
                     <span>My list</span>
                   </button> : ``}
 
-                {authorizationStatus === AuthorizationStatus.AUTH && <Link to={`/films/${selectedMovie.id}/review`} className="btn movie-card__button">Add review</Link>}
+                {authorizationStatus === AuthorizationStatus.AUTH && <Link to={`${AppRoute.FILMS}/${selectedMovie.id}${AppRoute.REVIEW}`} className="btn movie-card__button">Add review</Link>}
               </div>
             </div>
           </div>
@@ -131,7 +131,7 @@ const MoviePage = (props) => {
         </section>
         <footer className="page-footer">
           <div className="logo">
-            <Link to="/" className="logo__link logo__link--light">
+            <Link to={AppRoute.ROOT} className="logo__link logo__link--light">
               <span className="logo__letter logo__letter--1">W</span>
               <span className="logo__letter logo__letter--2">T</span>
               <span className="logo__letter logo__letter--3">W</span>
@@ -203,5 +203,4 @@ const mapDispatchToProps = (dispatch) => ({
   }
 });
 
-export {MoviePage};
 export default connect(mapStateToProps, mapDispatchToProps)(MoviePage);
