@@ -26,7 +26,9 @@ it(`Should MoviePage render correctly`, () => {
         "genre": `Test`,
         "id": 0,
       },
-      isSelectedFilmLoaded: true}
+      isSelectedFilmLoaded: true,
+      isFilmsLoaded: true,
+    }
   });
 
   const {container} = render(

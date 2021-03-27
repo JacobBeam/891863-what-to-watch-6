@@ -17,7 +17,8 @@ it(`Should SimilarMovies render correctly`, () => {
   const history = createMemoryHistory();
   const store = mockStore({
     FILM_DATA: {
-      films: []
+      films: [],
+      isFilmsLoaded: true
     },
   });
 

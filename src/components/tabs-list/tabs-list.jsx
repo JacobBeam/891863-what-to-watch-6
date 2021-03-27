@@ -1,14 +1,21 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import {connect} from 'react-redux';
+import {filmPropTypes} from '../../utils/prop-types';
+import {getSelectedMovie} from '../../store/film-data/selectors';
 import Tab from '../tab/tab';
 import TabOverview from '../tab-overview/tab-overview';
 import TabDetails from '../tab-details/tab-details';
 import TabReviews from '../tab-reviews/tab-reviews';
 import {TabType} from '../../utils/const';
 
+const TabsList = (props)=>{
 
-const TabsList = ()=>{
-
+  const {selectedMovie} = props;
   const [activeTab, setActiveTab] = useState(TabType.OVERVIEW);
+
+  useEffect(() => {
+    setActiveTab(TabType.OVERVIEW);
+  }, [selectedMovie]);
 
   const setActiveTabPage = (activeElement) =>{
 
@@ -46,4 +53,12 @@ const TabsList = ()=>{
   );
 };
 
-export default TabsList;
+TabsList.propTypes = {
+  selectedMovie: filmPropTypes.film,
+};
+
+const mapStateToProps = (state) => ({
+  selectedMovie: getSelectedMovie(state)
+});
+
+export default connect(mapStateToProps, null)(TabsList);

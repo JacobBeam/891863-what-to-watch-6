@@ -1,15 +1,30 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 import MovieCard from '../movie-card/movie-card';
 import {filmsPropTypes, filmPropTypes} from '../../utils/prop-types';
-import {getFilms, getSelectedMovie} from '../../store/film-data/selectors';
+import {getFilms, getSelectedMovie, getFilmsLoadedStatus} from '../../store/film-data/selectors';
+import {fetchFilmsList} from '../../store/api-action';
+import LoadingPage from '../loading-page/loading-page';
 
 const SIMILAR_MOVIES_COUNT = 4;
 
 const SimilarMovies = (props)=> {
 
   const [activeFilmCard, setActiveFilmCard] = useState({id: ``});
-  const {films, selectedMovie} = props;
+  const {films, selectedMovie, isFilmsLoaded, onLoadFilms} = props;
+
+  useEffect(() => {
+    if (!isFilmsLoaded) {
+      onLoadFilms();
+    }
+  }, [isFilmsLoaded]);
+
+  if (!isFilmsLoaded) {
+    return (
+      <LoadingPage></LoadingPage>
+    );
+  }
 
   const handleActiveCardAdd = (currentTarget) => {
     setActiveFilmCard({...activeFilmCard, id: currentTarget.dataset.filmId});
@@ -34,11 +49,20 @@ const SimilarMovies = (props)=> {
 };
 
 SimilarMovies.propTypes = {...filmsPropTypes,
-  selectedMovie: filmPropTypes.film};
+  selectedMovie: filmPropTypes.film,
+  isFilmsLoaded: PropTypes.bool.isRequired
+};
 
 const mapStateToProps = (state) => ({
   films: getFilms(state),
+  isFilmsLoaded: getFilmsLoadedStatus(state),
   selectedMovie: getSelectedMovie(state)
 });
 
-export default connect(mapStateToProps, null)(SimilarMovies);
+const mapDispatchToProps = (dispatch) => ({
+  onLoadFilms() {
+    dispatch(fetchFilmsList());
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SimilarMovies);
