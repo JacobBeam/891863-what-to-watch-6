@@ -19,9 +19,9 @@ const GenreList = (props) =>{
 
   return (
     <ul className="catalog__genres-list">
-      {uniqueGenres.map((element, index)=>{
+      {uniqueGenres.map((element)=>{
         return <GenreItem
-          key={element + index}
+          key={element}
           name={element}
           onResetCountFilms={handleCountFilmsReset}>{element}
         </GenreItem>;
